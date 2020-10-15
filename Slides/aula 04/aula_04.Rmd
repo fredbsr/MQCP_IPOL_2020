@@ -16,7 +16,7 @@ output:
     highlight: tango
   slidy_presentation:
     highlight: tango
-fontsize: 10pt
+fontsize: 9pt
 subtitle: Métodos Quantitativos Aplicados à Ciência Política
 ---
 
@@ -32,20 +32,26 @@ lapply(c("tidyverse","haven","lubridate","janitor","readxl",
 ## Pacotes e diretório de trabalho
 
 ```{r,eval=F} 
-lista.de.pacotes = c("tidyverse","haven","lubridate","janitor","readxl",
-                     "stringr", "magrittr") # escreva a lista de pacotes
+lista.de.pacotes = c("tidyverse","haven","lubridate",
+                     "janitor","readxl",
+                     "stringr", "magrittr") 
+                     # escreva a lista de pacotes
 
-novos.pacotes <- lista.de.pacotes[!(lista.de.pacotes %in%
-                                      installed.packages()[,"Package"])]
+novos.pacotes <- 
+  lista.de.pacotes[!(lista.de.pacotes %in%
+                      installed.packages()[,"Package"])]
+
 if(length(novos.pacotes) > 0) {install.packages(novos.pacotes)}
+
 lapply(lista.de.pacotes, require, character.only=T)
 #rm(lista.de.pacotes,novos.pacotes)
+
 rm(list = ls())
 gc()
 
 
 
-# Definiindo o diretorio de trabalho como do arquivo local
+# Definindo o diretorio de trabalho como do arquivo local
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 setwd("/Volumes/Macintosh HD/MQCP_IPOL_2020/Slides/aula 04") # mmudando meu direto

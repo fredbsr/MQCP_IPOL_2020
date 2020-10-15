@@ -3,7 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  10pt,
+  9pt,
   ignorenonframetext,
 ]{beamer}
 \usepackage{pgfpages}
@@ -148,20 +148,26 @@
 \protect\hypertarget{pacotes-e-diretuxf3rio-de-trabalho}{}
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{lista.de.pacotes =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{,}\StringTok{"haven"}\NormalTok{,}\StringTok{"lubridate"}\NormalTok{,}\StringTok{"janitor"}\NormalTok{,}\StringTok{"readxl"}\NormalTok{,}
-                     \StringTok{"stringr"}\NormalTok{, }\StringTok{"magrittr"}\NormalTok{) }\CommentTok{\# escreva a lista de pacotes}
+\NormalTok{lista.de.pacotes =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{,}\StringTok{"haven"}\NormalTok{,}\StringTok{"lubridate"}\NormalTok{,}
+                     \StringTok{"janitor"}\NormalTok{,}\StringTok{"readxl"}\NormalTok{,}
+                     \StringTok{"stringr"}\NormalTok{, }\StringTok{"magrittr"}\NormalTok{) }
+                     \CommentTok{\# escreva a lista de pacotes}
 
-\NormalTok{novos.pacotes \textless{}{-}}\StringTok{ }\NormalTok{lista.de.pacotes[}\OperatorTok{!}\NormalTok{(lista.de.pacotes }\OperatorTok{\%in\%}
-\StringTok{                                      }\KeywordTok{installed.packages}\NormalTok{()[,}\StringTok{"Package"}\NormalTok{])]}
+\NormalTok{novos.pacotes \textless{}{-}}\StringTok{ }
+\StringTok{  }\NormalTok{lista.de.pacotes[}\OperatorTok{!}\NormalTok{(lista.de.pacotes }\OperatorTok{\%in\%}
+\StringTok{                      }\KeywordTok{installed.packages}\NormalTok{()[,}\StringTok{"Package"}\NormalTok{])]}
+
 \ControlFlowTok{if}\NormalTok{(}\KeywordTok{length}\NormalTok{(novos.pacotes) }\OperatorTok{\textgreater{}}\StringTok{ }\DecValTok{0}\NormalTok{) \{}\KeywordTok{install.packages}\NormalTok{(novos.pacotes)\}}
+
 \KeywordTok{lapply}\NormalTok{(lista.de.pacotes, require, }\DataTypeTok{character.only=}\NormalTok{T)}
 \CommentTok{\#rm(lista.de.pacotes,novos.pacotes)}
+
 \KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
 \KeywordTok{gc}\NormalTok{()}
 
 
 
-\CommentTok{\# Definiindo o diretorio de trabalho como do arquivo local}
+\CommentTok{\# Definindo o diretorio de trabalho como do arquivo local}
 \KeywordTok{setwd}\NormalTok{(}\KeywordTok{dirname}\NormalTok{(rstudioapi}\OperatorTok{::}\KeywordTok{getActiveDocumentContext}\NormalTok{()}\OperatorTok{$}\NormalTok{path))}
 
 \KeywordTok{setwd}\NormalTok{(}\StringTok{"/Volumes/Macintosh HD/MQCP\_IPOL\_2020/Slides/aula 04"}\NormalTok{) }\CommentTok{\# mmudando meu direto}
