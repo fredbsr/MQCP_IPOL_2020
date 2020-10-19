@@ -1,0 +1,321 @@
+---
+title: "Pesquisa reproduzível"
+author: "Frederico Bertholini"
+date: "05.out.2020"
+output:
+  beamer_presentation:
+    theme: Berkeley
+    colortheme: dove
+    fonttheme: structurebold
+    keep_tex: yes
+    toc: yes
+    number_sections: yes
+    slide_level: 2
+    highlight: tango
+  ioslides_presentation:
+    highlight: tango
+  slidy_presentation:
+    highlight: tango
+fontsize: 9pt
+subtitle: Métodos Quantitativos Aplicados à Ciência Política
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T,eval=T)
+lapply(c("tidyverse","haven","lubridate","janitor","readxl",
+                     "stringr", "magrittr","srvyr","survey"),require,character.only=T)
+```
+
+
+# Nunca esqueça 
+
+## Pacotes e diretório de trabalho
+
+```{r,eval=F} 
+# rotina para carregar pacotes
+lista.de.pacotes = c("tidyverse","haven","lubridate",
+                     "janitor","readxl",
+                     "stringr", "magrittr",
+                     "survey","srvyr") 
+                     
+
+novos.pacotes <- 
+  lista.de.pacotes[!(lista.de.pacotes %in%
+                      installed.packages()[,"Package"])]
+
+if(length(novos.pacotes) > 0) {install.packages(novos.pacotes)}
+
+lapply(lista.de.pacotes, require, character.only=T)
+
+rm(list = ls())
+gc()
+
+
+# Definindo o diretorio de trabalho como do arquivo local
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+```  
+ 
+# Recapitulando
+
+## Live coding de manipulação de dados
+
+Reproduzindo trabalho sobre COVID e estados
+
+# Pesquisa reproduzível
+
+## Por quê?
+
+- Pra ciência
+
+- Pra você
+
+## Ferramentas
+
+- R e RStudio (ok)
+
+- Github
+
+- knitr e rmarkdown
+
+- LaTeX
+
+
+## Fluxo de trabalho
+
+1. Coleta
+
+2. Análise
+
+3. Comunicação
+
+
+##
+
+
+```{r, out.width="100%", echo=FALSE, fig.align='center',eval=T}
+knitr::include_graphics("imgs/fluxo_gandrud.png")
+```
+
+
+## Dicas
+
+
+1. Documente tudo!
+
+2. Tudo é um arquivo (de texto).
+
+3. Todos os arquivos devem ser legíveis (por humanos).
+
+4. Relacione explicitamente seus arquivos.
+
+5. Tenha um plano para organizar, armazenar e disponibilizar seus arquivos.
+
+# Versionando projetos
+
+##
+
+
+```{r, out.width="80%", echo=FALSE, fig.align='center',eval=T}
+knitr::include_graphics("imgs/fluxo_github_rstudio.png")
+```
+
+
+## Passo-a-passo
+
+1. Repositório: Criação de repositório do projeto no Github
+
+2. .Rproj: Criação do Projeto no RStudio
+
+3. Commit: Editando e “Commitando” as mudanças no código
+
+4. Push: Subindo os commits para o Github
+
+5. Pull: Baixando o estado atual do projeto
+
+
+
+# Gerenciamento de arquivos
+
+# ggplot
+
+## O que você quer mostrar?
+
+![](imgs/Pic_2.png)
+
+## Princípios
+
+- O que você quer mostrar? 
+
+- Elementos que podem **destacar** ou **confundir** o que você quer mostrar.
+
+ -- Exemplo Codeplan
+
+- vamos tentar alternar "teoria" com live code
+
+
+## Recursos
+
+- R Cookbook <http://www.cookbook-r.com/Graphs/>
+
+- STHDA <http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-highly-effective-r-software-and-data-visualization>
+
+- R Graph Gallery <https://www.r-graph-gallery.com/>
+
+- Extensões <http://www.ggplot2-exts.org/>
+
+## Elementos do ggplot
+
+- Dados
+
+- Geometrias
+
+- Estéticas
+
+- Escalas (estética)
+
+- Escalas (eixos)
+
+- Tema
+
+- Facet
+
+
+## Dados `data = `
+
+- Dado empilhado?
+
+- Cada coluna será uma entrada!
+
+
+## Geometrias `geom_`
+
+- geom_`tipo_de_geometria`
+
+- Recursos +
+
+- cheat sheet  <https://www.rstudio.com/wp-content/uploads/2016/03/ggplot2-cheatsheet-portuguese.pdf>
+
+- manual ggplot <https://ggplot2.tidyverse.org/reference/>
+
+
+## Estéticas `aes()`
+
+- `x` (`xmax` e `xmin`)
+
+- `y`
+
+- `color`
+
+- `fill`
+
+- `shape`
+
+- `group`
+
+- `size`
+
+
+## Escalas (estética) `scale_`
+
+- `scale_color_xx`
+
+- `scale_fill_xx`
+
+- `scale_shape_xx`
+
+
+## Escalas (eixos) `scale_x`
+
+- Contínua `scale_x_continuous`
+
+- Discreta `scale_x_discrete`
+
+- Série de tempo `zoo` --> `scale_yearmon`
+
+
+## Tema
+
+- Customização total da visualização
+
+- Eixos
+
+- Texto `element_text`
+
+- linhas de grade 
+
+## Facet
+
+- facet_grid
+
+- facet_wrap
+
+## Gráficos com interatividade
+
+- ggiraph
+
+- plotly (ggplotly)
+
+
+
+## Exercício
+
+- Carregue os dados de exemplo do pacote survey `data(api)`, use o data.frame `apisrs` 
+
+- Crie o objeto tbl_svy `amostra_expandida` expandindo a amostra aleatória simples usando apenas a variável (coluna) "pw", contendo o peso amostral. Dica: execute `as_survey(weight=pw)`. 
+
+- Usando a variável `stype` crie uma nova variável indicando se a escola é de nível fundamental (categorias **E** e **M** de `stype`)  ou de nível médio (categoria *H* de `stype`). Dica: use `mutate`e `case_when`.
+
+- Faça um gráfico de barras comparando a variação média das notas de 1999 (`api99`) e 2000 (`api00`) por nível e utilize as estimativas intervalares. Dica: olhe o código da aula 07, utilize `geom_errorbar` para a estimativa intervalar.
+
+
+## Resolução
+```{r,eval=T,echo=T}
+
+data(api)
+
+amostra_expandida <- apisrs %>% 
+  as_survey(weight = pw) %>%
+  mutate(nivel=case_when(
+    stype=="E"~"Fundamental",
+    stype=="M"~"Fundamental",
+    stype=="H"~"Médio"
+  ))
+
+```
+
+
+##
+
+```{r,eval=T,echo=T}
+
+out <- amostra_expandida %>%
+  group_by(nivel) %>%
+  summarise(api_diff = 
+              survey_mean(api00 - api99, vartype = "ci"))
+
+```
+
+
+## 
+
+```{r,eval=T,echo=T}
+
+grafico <- out %>% 
+  ggplot(aes(x = nivel, y = api_diff, 
+             fill = nivel,color=nivel,
+                       ymax = api_diff_upp, 
+             ymin = api_diff_low)) +
+  geom_bar(stat = "identity",alpha=0.6) +
+  geom_errorbar(width = 0,size=3) 
+
+```
+
+##
+
+```{r,eval=T}
+
+grafico
+
+```
+

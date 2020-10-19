@@ -73,7 +73,7 @@ O fato de não conseguirmos dar uma resposta **EXATA** para um problema, não si
 
 ## Teorias, métodos e observações
 
-![](ciclo.png)
+![](imgs/ciclo.png)
 
 
 ## Modelando
