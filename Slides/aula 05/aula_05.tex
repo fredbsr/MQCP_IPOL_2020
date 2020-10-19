@@ -186,8 +186,9 @@
 \end{Shaded}
 \end{frame}
 
-\hypertarget{recapitulando}{%
-\section{Recapitulando}\label{recapitulando}}
+\hypertarget{recapitulando-manipulauxe7uxe3o}{%
+\section{Recapitulando
+manipulação}\label{recapitulando-manipulauxe7uxe3o}}
 
 \begin{frame}{Live coding de manipulação de dados}
 \protect\hypertarget{live-coding-de-manipulauxe7uxe3o-de-dados}{}
@@ -255,6 +256,17 @@ Reproduzindo trabalho sobre COVID e estados
 \end{enumerate}
 \end{frame}
 
+\begin{frame}{Trabalhando com projetos}
+\protect\hypertarget{trabalhando-com-projetos}{}
+Gerenciamento de arquivos: caminhos relativos e não absolutos
+
+\begin{itemize}
+\tightlist
+\item
+  Onde guardar seus projetos?
+\end{itemize}
+\end{frame}
+
 \hypertarget{versionando-projetos}{%
 \section{Versionando projetos}\label{versionando-projetos}}
 
@@ -279,15 +291,69 @@ Reproduzindo trabalho sobre COVID e estados
 \end{enumerate}
 \end{frame}
 
-\hypertarget{gerenciamento-de-arquivos}{%
-\section{Gerenciamento de arquivos}\label{gerenciamento-de-arquivos}}
+\begin{frame}{Caso tenha dificuldade}
+\protect\hypertarget{caso-tenha-dificuldade}{}
+\href{https://beatrizmilz.github.io/RLadies-Git-RStudio-2019/\#1}{Beatriz
+Milz - RLadies}
+
+\href{https://www.curso-r.com/blog/2017-07-17-rstudio-e-github/}{Curso
+R}
+\end{frame}
 
 \hypertarget{ggplot}{%
 \section{ggplot}\label{ggplot}}
 
+\begin{frame}{Uma exibição gráfica deve (1/2)}
+\protect\hypertarget{uma-exibiuxe7uxe3o-gruxe1fica-deve-12}{}
+Mostrar os dados
+
+Induzir o observador a pensar em sua substância, não em metodologia ou
+tecnologia de produção
+
+Evitar distorcer o que os dados dizem
+
+Apresentar muitos números em pequenos espaços
+
+Tornar grandes conjuntos de dados coerentes
+\end{frame}
+
+\begin{frame}{Uma exibição gráfica deve (2/2)}
+\protect\hypertarget{uma-exibiuxe7uxe3o-gruxe1fica-deve-22}{}
+Encorajar o observador a comparar diferentes partes dos dados
+
+Revelar diferentes níveis de detalhamento dos dados
+
+Servir a um propósito claro e razoável: descrição, exploração, tabulação
+ou decoração
+
+Estar integrada com as descrições estatísticas e verbais do conjunto de
+dados
+\end{frame}
+
+\begin{frame}{4 princípios (Edward Tufte)}
+\protect\hypertarget{princuxedpios-edward-tufte}{}
+Miniaturas Múltiplas
+
+Menor diferença efetiva
+
+Causalidade (Respondendo a pergunta: ``Comparado com o quê?'')
+
+Contexto
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-2}{}
+\includegraphics{imgs/ideas_ink_space_time.png}
+\end{frame}
+
 \begin{frame}{O que você quer mostrar?}
 \protect\hypertarget{o-que-vocuxea-quer-mostrar}{}
 \includegraphics{imgs/Pic_2.png}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-3}{}
+\href{https://www.techprevue.com/decision-tree-perfect-visualisation-data/}{\includegraphics{imgs/abela-chart-chooser.jpg}}
 \end{frame}
 
 \begin{frame}{Princípios}
@@ -298,12 +364,6 @@ Reproduzindo trabalho sobre COVID e estados
 \item
   Elementos que podem \textbf{destacar} ou \textbf{confundir} o que você
   quer mostrar.
-\end{itemize}
-
--- Exemplo Codeplan
-
-\begin{itemize}
-\tightlist
 \item
   vamos tentar alternar ``teoria'' com live code
 \end{itemize}
@@ -313,14 +373,13 @@ Reproduzindo trabalho sobre COVID e estados
 \protect\hypertarget{recursos}{}
 \begin{itemize}
 \item
-  R Cookbook \url{http://www.cookbook-r.com/Graphs/}
+  \href{http://www.cookbook-r.com/Graphs/}{R Cookbook}
 \item
-  STHDA
-  \url{http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-highly-effective-r-software-and-data-visualization}
+  \href{http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-highly-effective-r-software-and-data-visualization}{STHDA}
 \item
-  R Graph Gallery \url{https://www.r-graph-gallery.com/}
+  \href{https://www.r-graph-gallery.com/}{R Graph Gallery}
 \item
-  Extensões \url{http://www.ggplot2-exts.org/}
+  \href{http://www.ggplot2-exts.org/}{Extensões}
 \end{itemize}
 \end{frame}
 
@@ -362,10 +421,10 @@ Reproduzindo trabalho sobre COVID e estados
 \item
   Recursos +
 \item
-  cheat sheet
-  \url{https://www.rstudio.com/wp-content/uploads/2016/03/ggplot2-cheatsheet-portuguese.pdf}
+  \href{https://www.rstudio.com/wp-content/uploads/2016/03/ggplot2-cheatsheet-portuguese.pdf}{cheat
+  sheet}
 \item
-  manual ggplot \url{https://ggplot2.tidyverse.org/reference/}
+  \href{https://ggplot2.tidyverse.org/reference/}{manual ggplot}
 \end{itemize}
 \end{frame}
 
@@ -409,7 +468,8 @@ Reproduzindo trabalho sobre COVID e estados
 \item
   Discreta \texttt{scale\_x\_discrete}
 \item
-  Série de tempo \texttt{zoo} --\textgreater{} \texttt{scale\_yearmon}
+  Série de tempo \texttt{zoo}e \texttt{lubridate} --\textgreater{}
+  \texttt{scale\_yearmon}
 \end{itemize}
 \end{frame}
 
@@ -437,13 +497,24 @@ Reproduzindo trabalho sobre COVID e estados
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Gráficos com interatividade}
-\protect\hypertarget{gruxe1ficos-com-interatividade}{}
+\begin{frame}[fragile]{Adicionais}
+\protect\hypertarget{adicionais}{}
+Gráficos com interatividade:
+
 \begin{itemize}
 \item
-  ggiraph
+  \href{}{ggiraph}
 \item
-  plotly (ggplotly)
+  \href{https://plotly-r.com/index.html}{plotly (\texttt{ggplotly})}
+\end{itemize}
+
+Combinação de gráficos
+
+\begin{itemize}
+\item
+  \href{https://patchwork.data-imaginist.com/articles/patchwork.html}{patchwork}
+\item
+  \href{}{cowplot}
 \end{itemize}
 \end{frame}
 
@@ -489,7 +560,7 @@ Reproduzindo trabalho sobre COVID e estados
 \end{frame}
 
 \begin{frame}[fragile]{}
-\protect\hypertarget{section-2}{}
+\protect\hypertarget{section-4}{}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{out \textless{}{-}}\StringTok{ }\NormalTok{amostra\_expandida }\OperatorTok{\%\textgreater{}\%}
@@ -501,7 +572,7 @@ Reproduzindo trabalho sobre COVID e estados
 \end{frame}
 
 \begin{frame}[fragile]{}
-\protect\hypertarget{section-3}{}
+\protect\hypertarget{section-5}{}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{grafico \textless{}{-}}\StringTok{ }\NormalTok{out }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
@@ -516,7 +587,7 @@ Reproduzindo trabalho sobre COVID e estados
 \end{frame}
 
 \begin{frame}[fragile]{}
-\protect\hypertarget{section-4}{}
+\protect\hypertarget{section-6}{}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{grafico}

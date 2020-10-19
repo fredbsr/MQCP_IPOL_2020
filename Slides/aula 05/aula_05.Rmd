@@ -56,11 +56,11 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 ```  
  
-# Recapitulando
+# Recapitulando manipulação
 
 ## Live coding de manipulação de dados
 
-Reproduzindo trabalho sobre COVID e estados
+Reproduzindo trabalho sobre COVID e estados 
 
 # Pesquisa reproduzível
 
@@ -111,6 +111,14 @@ knitr::include_graphics("imgs/fluxo_gandrud.png")
 
 5. Tenha um plano para organizar, armazenar e disponibilizar seus arquivos.
 
+
+## Trabalhando com projetos
+
+Gerenciamento de arquivos: caminhos relativos e não absolutos
+
+- Onde guardar seus projetos?
+
+
 # Versionando projetos
 
 ##
@@ -134,14 +142,61 @@ knitr::include_graphics("imgs/fluxo_github_rstudio.png")
 5. Pull: Baixando o estado atual do projeto
 
 
+## Caso tenha dificuldade
 
-# Gerenciamento de arquivos
+[Beatriz Milz - RLadies](https://beatrizmilz.github.io/RLadies-Git-RStudio-2019/#1)
+
+[Curso R](https://www.curso-r.com/blog/2017-07-17-rstudio-e-github/)
+
 
 # ggplot
+
+## Uma exibição gráfica deve (1/2)
+
+
+Mostrar os dados
+
+Induzir o observador a pensar em sua substância, não em metodologia ou tecnologia de produção
+
+Evitar distorcer o que os dados dizem
+
+Apresentar muitos números em pequenos espaços
+
+Tornar grandes conjuntos de dados coerentes
+
+
+## Uma exibição gráfica deve (2/2)
+
+Encorajar o observador a comparar diferentes partes dos dados
+
+Revelar diferentes níveis de detalhamento dos dados
+
+Servir a um propósito claro e razoável: descrição, exploração, tabulação ou decoração
+
+Estar integrada com as descrições estatísticas e verbais do conjunto de dados
+
+## 4 princípios (Edward Tufte)
+
+Miniaturas Múltiplas 
+
+Menor diferença efetiva 
+
+Causalidade (Respondendo a pergunta: "Comparado com o quê?") 
+
+Contexto 
+
+
+##
+
+![](imgs/ideas_ink_space_time.png)
 
 ## O que você quer mostrar?
 
 ![](imgs/Pic_2.png)
+
+##
+
+[![](imgs/abela-chart-chooser.jpg)](https://www.techprevue.com/decision-tree-perfect-visualisation-data/)
 
 ## Princípios
 
@@ -149,20 +204,18 @@ knitr::include_graphics("imgs/fluxo_github_rstudio.png")
 
 - Elementos que podem **destacar** ou **confundir** o que você quer mostrar.
 
- -- Exemplo Codeplan
-
 - vamos tentar alternar "teoria" com live code
 
 
 ## Recursos
 
-- R Cookbook <http://www.cookbook-r.com/Graphs/>
+- [R Cookbook](http://www.cookbook-r.com/Graphs/)
 
-- STHDA <http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-highly-effective-r-software-and-data-visualization>
+- [STHDA](http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-highly-effective-r-software-and-data-visualization)
 
-- R Graph Gallery <https://www.r-graph-gallery.com/>
+- [R Graph Gallery](https://www.r-graph-gallery.com/)
 
-- Extensões <http://www.ggplot2-exts.org/>
+- [Extensões](http://www.ggplot2-exts.org/)
 
 ## Elementos do ggplot
 
@@ -194,9 +247,9 @@ knitr::include_graphics("imgs/fluxo_github_rstudio.png")
 
 - Recursos +
 
-- cheat sheet  <https://www.rstudio.com/wp-content/uploads/2016/03/ggplot2-cheatsheet-portuguese.pdf>
+- [cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/03/ggplot2-cheatsheet-portuguese.pdf)
 
-- manual ggplot <https://ggplot2.tidyverse.org/reference/>
+- [manual ggplot](https://ggplot2.tidyverse.org/reference/)
 
 
 ## Estéticas `aes()`
@@ -231,7 +284,7 @@ knitr::include_graphics("imgs/fluxo_github_rstudio.png")
 
 - Discreta `scale_x_discrete`
 
-- Série de tempo `zoo` --> `scale_yearmon`
+- Série de tempo `zoo`e `lubridate` --> `scale_yearmon`
 
 
 ## Tema
@@ -250,13 +303,19 @@ knitr::include_graphics("imgs/fluxo_github_rstudio.png")
 
 - facet_wrap
 
-## Gráficos com interatividade
+## Adicionais
 
-- ggiraph
+Gráficos com interatividade:
 
-- plotly (ggplotly)
+- [ggiraph]()
 
+- [plotly (`ggplotly`)](https://plotly-r.com/index.html)
 
+Combinação de gráficos
+
+- [patchwork](https://patchwork.data-imaginist.com/articles/patchwork.html)
+
+- [cowplot]()
 
 ## Exercício
 
