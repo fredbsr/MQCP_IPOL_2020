@@ -125,19 +125,6 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{graphicx}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-% Set default figure placement to htbp
-\makeatletter
-\def\fps@figure{htbp}
-\makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -193,6 +180,78 @@ manipulação}\label{recapitulando-manipulauxe7uxe3o}}
 \begin{frame}{Live coding de manipulação de dados}
 \protect\hypertarget{live-coding-de-manipulauxe7uxe3o-de-dados}{}
 Reproduzindo trabalho sobre COVID e estados
+\end{frame}
+
+\begin{frame}[fragile]{Exemplo de join}
+\protect\hypertarget{exemplo-de-join}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{A \textless{}{-}}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{Partido=}\KeywordTok{c}\NormalTok{(}\StringTok{"X"}\NormalTok{,}\StringTok{"Y"}\NormalTok{,}\StringTok{"Z"}\NormalTok{,}\StringTok{"Z"}\NormalTok{,}\StringTok{"W"}\NormalTok{),}
+            \DataTypeTok{Estado=}\KeywordTok{c}\NormalTok{(}\StringTok{"Estado A"}\NormalTok{,}\StringTok{"Estado A"}\NormalTok{,}\StringTok{"Estado B"}\NormalTok{,}\StringTok{"Estado A"}\NormalTok{,}\StringTok{"Estado B"}\NormalTok{))}
+
+\NormalTok{B \textless{}{-}}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{Estado=}\KeywordTok{c}\NormalTok{(}\StringTok{"Estado A"}\NormalTok{,}\StringTok{"Estado B"}\NormalTok{,}\StringTok{"Estado C"}\NormalTok{),}
+            \DataTypeTok{Sigla =} \KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{,}\StringTok{"B"}\NormalTok{,}\StringTok{"C"}\NormalTok{))}
+
+\NormalTok{C \textless{}{-}}\StringTok{ }\NormalTok{A }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{left\_join}\NormalTok{(B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "Estado"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{D \textless{}{-}}\StringTok{ }\NormalTok{A }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{full\_join}\NormalTok{(B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "Estado"
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{left\_join}}
+\protect\hypertarget{left_join}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+##   Partido Estado   Sigla
+##   <chr>   <chr>    <chr>
+## 1 X       Estado A A    
+## 2 Y       Estado A A    
+## 3 Z       Estado B B    
+## 4 Z       Estado A A    
+## 5 W       Estado B B
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{full\_join} (não fazer)}
+\protect\hypertarget{full_join-nuxe3o-fazer}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{D}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   Partido Estado   Sigla
+##   <chr>   <chr>    <chr>
+## 1 X       Estado A A    
+## 2 Y       Estado A A    
+## 3 Z       Estado B B    
+## 4 Z       Estado A A    
+## 5 W       Estado B B    
+## 6 <NA>    Estado C C
+\end{verbatim}
 \end{frame}
 
 \hypertarget{pesquisa-reproduzuxedvel}{%
@@ -298,303 +357,6 @@ Milz - RLadies}
 
 \href{https://www.curso-r.com/blog/2017-07-17-rstudio-e-github/}{Curso
 R}
-\end{frame}
-
-\hypertarget{ggplot}{%
-\section{ggplot}\label{ggplot}}
-
-\begin{frame}{Uma exibição gráfica deve (1/2)}
-\protect\hypertarget{uma-exibiuxe7uxe3o-gruxe1fica-deve-12}{}
-Mostrar os dados
-
-Induzir o observador a pensar em sua substância, não em metodologia ou
-tecnologia de produção
-
-Evitar distorcer o que os dados dizem
-
-Apresentar muitos números em pequenos espaços
-
-Tornar grandes conjuntos de dados coerentes
-\end{frame}
-
-\begin{frame}{Uma exibição gráfica deve (2/2)}
-\protect\hypertarget{uma-exibiuxe7uxe3o-gruxe1fica-deve-22}{}
-Encorajar o observador a comparar diferentes partes dos dados
-
-Revelar diferentes níveis de detalhamento dos dados
-
-Servir a um propósito claro e razoável: descrição, exploração, tabulação
-ou decoração
-
-Estar integrada com as descrições estatísticas e verbais do conjunto de
-dados
-\end{frame}
-
-\begin{frame}{4 princípios (Edward Tufte)}
-\protect\hypertarget{princuxedpios-edward-tufte}{}
-Miniaturas Múltiplas
-
-Menor diferença efetiva
-
-Causalidade (Respondendo a pergunta: ``Comparado com o quê?'')
-
-Contexto
-\end{frame}
-
-\begin{frame}{}
-\protect\hypertarget{section-2}{}
-\includegraphics{imgs/ideas_ink_space_time.png}
-\end{frame}
-
-\begin{frame}{O que você quer mostrar?}
-\protect\hypertarget{o-que-vocuxea-quer-mostrar}{}
-\includegraphics{imgs/Pic_2.png}
-\end{frame}
-
-\begin{frame}{}
-\protect\hypertarget{section-3}{}
-\href{https://www.techprevue.com/decision-tree-perfect-visualisation-data/}{\includegraphics{imgs/abela-chart-chooser.jpg}}
-\end{frame}
-
-\begin{frame}{Princípios}
-\protect\hypertarget{princuxedpios}{}
-\begin{itemize}
-\item
-  O que você quer mostrar?
-\item
-  Elementos que podem \textbf{destacar} ou \textbf{confundir} o que você
-  quer mostrar.
-\item
-  vamos tentar alternar ``teoria'' com live code
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Recursos}
-\protect\hypertarget{recursos}{}
-\begin{itemize}
-\item
-  \href{http://www.cookbook-r.com/Graphs/}{R Cookbook}
-\item
-  \href{http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-highly-effective-r-software-and-data-visualization}{STHDA}
-\item
-  \href{https://www.r-graph-gallery.com/}{R Graph Gallery}
-\item
-  \href{http://www.ggplot2-exts.org/}{Extensões}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Elementos do ggplot}
-\protect\hypertarget{elementos-do-ggplot}{}
-\begin{itemize}
-\item
-  Dados
-\item
-  Geometrias
-\item
-  Estéticas
-\item
-  Escalas (estética)
-\item
-  Escalas (eixos)
-\item
-  Tema
-\item
-  Facet
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Dados \texttt{data\ =}}
-\protect\hypertarget{dados-data}{}
-\begin{itemize}
-\item
-  Dado empilhado?
-\item
-  Cada coluna será uma entrada!
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Geometrias \texttt{geom\_}}
-\protect\hypertarget{geometrias-geom_}{}
-\begin{itemize}
-\item
-  geom\_\texttt{tipo\_de\_geometria}
-\item
-  Recursos +
-\item
-  \href{https://www.rstudio.com/wp-content/uploads/2016/03/ggplot2-cheatsheet-portuguese.pdf}{cheat
-  sheet}
-\item
-  \href{https://ggplot2.tidyverse.org/reference/}{manual ggplot}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Estéticas \texttt{aes()}}
-\protect\hypertarget{estuxe9ticas-aes}{}
-\begin{itemize}
-\item
-  \texttt{x} (\texttt{xmax} e \texttt{xmin})
-\item
-  \texttt{y}
-\item
-  \texttt{color}
-\item
-  \texttt{fill}
-\item
-  \texttt{shape}
-\item
-  \texttt{group}
-\item
-  \texttt{size}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Escalas (estética) \texttt{scale\_}}
-\protect\hypertarget{escalas-estuxe9tica-scale_}{}
-\begin{itemize}
-\item
-  \texttt{scale\_color\_xx}
-\item
-  \texttt{scale\_fill\_xx}
-\item
-  \texttt{scale\_shape\_xx}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Escalas (eixos) \texttt{scale\_x}}
-\protect\hypertarget{escalas-eixos-scale_x}{}
-\begin{itemize}
-\item
-  Contínua \texttt{scale\_x\_continuous}
-\item
-  Discreta \texttt{scale\_x\_discrete}
-\item
-  Série de tempo \texttt{zoo}e \texttt{lubridate} --\textgreater{}
-  \texttt{scale\_yearmon}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Tema}
-\protect\hypertarget{tema}{}
-\begin{itemize}
-\item
-  Customização total da visualização
-\item
-  Eixos
-\item
-  Texto \texttt{element\_text}
-\item
-  linhas de grade
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Facet}
-\protect\hypertarget{facet}{}
-\begin{itemize}
-\item
-  facet\_grid
-\item
-  facet\_wrap
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Adicionais}
-\protect\hypertarget{adicionais}{}
-Gráficos com interatividade:
-
-\begin{itemize}
-\item
-  \href{}{ggiraph}
-\item
-  \href{https://plotly-r.com/index.html}{plotly (\texttt{ggplotly})}
-\end{itemize}
-
-Combinação de gráficos
-
-\begin{itemize}
-\item
-  \href{https://patchwork.data-imaginist.com/articles/patchwork.html}{patchwork}
-\item
-  \href{}{cowplot}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Exercício}
-\protect\hypertarget{exercuxedcio}{}
-\begin{itemize}
-\item
-  Carregue os dados de exemplo do pacote survey \texttt{data(api)}, use
-  o data.frame \texttt{apisrs}
-\item
-  Crie o objeto tbl\_svy \texttt{amostra\_expandida} expandindo a
-  amostra aleatória simples usando apenas a variável (coluna) ``pw'',
-  contendo o peso amostral. Dica: execute
-  \texttt{as\_survey(weight=pw)}.
-\item
-  Usando a variável \texttt{stype} crie uma nova variável indicando se a
-  escola é de nível fundamental (categorias \textbf{E} e \textbf{M} de
-  \texttt{stype}) ou de nível médio (categoria \emph{H} de
-  \texttt{stype}). Dica: use \texttt{mutate}e \texttt{case\_when}.
-\item
-  Faça um gráfico de barras comparando a variação média das notas de
-  1999 (\texttt{api99}) e 2000 (\texttt{api00}) por nível e utilize as
-  estimativas intervalares. Dica: olhe o código da aula 07, utilize
-  \texttt{geom\_errorbar} para a estimativa intervalar.
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Resolução}
-\protect\hypertarget{resoluuxe7uxe3o}{}
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{data}\NormalTok{(api)}
-
-\NormalTok{amostra\_expandida \textless{}{-}}\StringTok{ }\NormalTok{apisrs }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\StringTok{  }\KeywordTok{as\_survey}\NormalTok{(}\DataTypeTok{weight =}\NormalTok{ pw) }\OperatorTok{\%\textgreater{}\%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{nivel=}\KeywordTok{case\_when}\NormalTok{(}
-\NormalTok{    stype}\OperatorTok{==}\StringTok{"E"}\OperatorTok{\textasciitilde{}}\StringTok{"Fundamental"}\NormalTok{,}
-\NormalTok{    stype}\OperatorTok{==}\StringTok{"M"}\OperatorTok{\textasciitilde{}}\StringTok{"Fundamental"}\NormalTok{,}
-\NormalTok{    stype}\OperatorTok{==}\StringTok{"H"}\OperatorTok{\textasciitilde{}}\StringTok{"Médio"}
-\NormalTok{  ))}
-\end{Highlighting}
-\end{Shaded}
-\end{frame}
-
-\begin{frame}[fragile]{}
-\protect\hypertarget{section-4}{}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{out \textless{}{-}}\StringTok{ }\NormalTok{amostra\_expandida }\OperatorTok{\%\textgreater{}\%}
-\StringTok{  }\KeywordTok{group\_by}\NormalTok{(nivel) }\OperatorTok{\%\textgreater{}\%}
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{api\_diff =} 
-              \KeywordTok{survey\_mean}\NormalTok{(api00 }\OperatorTok{{-}}\StringTok{ }\NormalTok{api99, }\DataTypeTok{vartype =} \StringTok{"ci"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-\end{frame}
-
-\begin{frame}[fragile]{}
-\protect\hypertarget{section-5}{}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{grafico \textless{}{-}}\StringTok{ }\NormalTok{out }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ nivel, }\DataTypeTok{y =}\NormalTok{ api\_diff, }
-             \DataTypeTok{fill =}\NormalTok{ nivel,}\DataTypeTok{color=}\NormalTok{nivel,}
-                       \DataTypeTok{ymax =}\NormalTok{ api\_diff\_upp, }
-             \DataTypeTok{ymin =}\NormalTok{ api\_diff\_low)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom\_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{,}\DataTypeTok{alpha=}\FloatTok{0.6}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom\_errorbar}\NormalTok{(}\DataTypeTok{width =} \DecValTok{0}\NormalTok{,}\DataTypeTok{size=}\DecValTok{3}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-\end{frame}
-
-\begin{frame}[fragile]{}
-\protect\hypertarget{section-6}{}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{grafico}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{aula_05_files/figure-beamer/unnamed-chunk-7-1.pdf}
 \end{frame}
 
 \end{document}
