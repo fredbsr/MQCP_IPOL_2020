@@ -105,6 +105,8 @@ O R Markdown integra vários pacotes R e ferramentas externas. então, use o che
 
 - LaTeX
 
+![](imgs/sistema.png)
+
 
 ## O básico
 
