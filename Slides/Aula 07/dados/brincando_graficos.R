@@ -47,19 +47,18 @@ df_plot <- df %>%
   dplyr::filter(candidato %in% c("BRANCO/NULO","NS/NR"))
 
 plot <- df_plot %>%
-  ggplot() +
-  geom_bar(aes(x=perc,fill=candidato,y=UF),
-           stat = "identity",
+  ggplot(aes(x=perc,y=paste0(Capital,"/",UF),fill=candidato)) +
+  geom_bar(stat = "identity",
            position = "dodge",
            alpha=.7,
            width = .85) +
-  geom_text(aes(x=perc,label=paste0(perc,"%"),y=UF,color=candidato),
+  geom_text(aes(label=paste0(perc,"%"),color=candidato),
             position=position_dodge(.85),
             hjust=0,
             size=3) +
-  facet_grid(rows =vars(`Região`),scales = "free_y",space="free") +
+  facet_grid(rows =vars(`Região`),scales = "free_y",space="free",switch = "y") +
   labs(fill="",x="",y="") +
-  guides(color="none")+
+  guides(color="none") +
   theme_minimal() +
   theme(legend.position = "top")
 
