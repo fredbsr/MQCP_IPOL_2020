@@ -19,10 +19,12 @@ output:
 fontsize: 9pt
 classoption: "aspectratio=169"
 subtitle: Métodos Quantitativos Aplicados à Ciência Política
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = T,eval=T,warning = F,message = F,comment = F)
+knitr::opts_chunk$set(echo = T,eval=T,warning = F,message = F,comment = '')
 lapply(c("tidyverse","haven","lubridate","janitor","readxl",
                      "stringr","knitr", "magrittr","srvyr","survey","rvest","dataMaid"),require,character.only=T)
 ```
@@ -47,18 +49,49 @@ dfe <- read_rds("dados/dfe.rds")
 # Codebook dataMaid -- explicar
 attr(dfe$id, "label") <- "Identificação"
 attr(dfe$id, "shortDescription") <- "Variável de identificação do aluno"
-
+attr(dfe$media, "label") <- "Média final"
 attr(dfe$media, "shortDescription") <- "Nota do aluno ao final da disciplina"
 attr(dfe$faltas, "shortDescription") <- "Total de faltas ao longo do semestre"
 attr(dfe$turma, "shortDescription") <- "Turma do aluno"
-attr(dfe$idade, "shortDescription") <- "Variável de identificação do aluno"
-attr(dfe$interess, "shortDescription") <- "Variável de identificação do aluno"
-attr(dfe$tempocup, "shortDescription") <- "Variável de identificação do aluno"
-attr(dfe$escola, "shortDescription") <- "Variável de identificação do aluno"
+attr(dfe$idade, "shortDescription") <- "Idade do aluno"
+attr(dfe$interess, "label") <- "Interesse"
+attr(dfe$interess, "shortDescription") <- "Prioridade de interesse do aluno"
+attr(dfe$tempocup, "shortDescription") <- "Tempo de dedicação semanal do aluno"
+attr(dfe$escola, "shortDescription") <- "Tipo de escola onde o aluno cursou ensino médio"
 attr(dfe$estcivil, "shortDescription") <- "Estado civil do aluno"
 
-# makeCodebook(dfe,file = "cb_dfe.pdf")
+# makeCodebook(dfe,file = "cb_dfe.rmd")
 ```
+
+
+```{r}
+# Codebook dataMaid -- explicar
+attr(dfe, "label") <- c("Identificação",
+                        "Média final",
+                        "Faltas",
+                        "Turma",
+                        "Idade",
+                        "Interesse",
+                        "Dedicação",
+                        "Tipo Escola",
+                        "Estado Civil")
+
+
+attr(dfe, "shortDescription") <- c("Variável de identificação do aluno",
+                                   "Nota do aluno ao final da disciplina",
+                                   "Total de faltas ao longo do semestre",
+                                   "Turma do aluno",
+                                   "Idade do aluno",
+                                   "Prioridade de interesse do aluno",
+                                   "Tempo de dedicação semanal do aluno",
+                                   "Tipo de escola onde o aluno cursou ensino médio",
+                                   "Estado civil do aluno")
+
+# makeCodebook(dfe,file = "cb_dfe.rmd")
+```
+
+
+
 
 [R Ladies - dataMaid](http://biostat.mc.vanderbilt.edu/wiki/pub/Main/MollyOlson/R-ladies-datamaid.html)
 
@@ -205,9 +238,15 @@ Taxa: $eventos/exposição ao risco$
 
 ## Parlamentares - Número efetivo de partidos
 
+$$ \Huge \frac{1}{\sum pe^{2}} $$
 
 ## Parlamentares - Renovação
 
+\begingroup\Large
+\begin{equation*}
+Y_{ij} = [\beta_0 + \beta_1 (\text{Dose}-300)] + [\varepsilon_{ij}]
+\end{equation*}
+\endgroup
 
 ## Eleitorais
 
@@ -247,7 +286,7 @@ dfe %>%
 
 ```{r,fig.height=4}
 dfe %>%
-  ggplot(aes(y=media,x=idade)) +
+  ggplot(aes(y=media,x=idade,group=escola)) +
   geom_point() +
   geom_smooth(method="lm")
 ```
@@ -271,152 +310,4 @@ dfe %>%
   ggpubr::ggboxplot(x="estcivil",y="idade",fill = "estcivil")
 ```
 
-
-# Medidas de posição
-
-## Medidas de posição 
-
-As medidas de posição trazem informação sobre a localização dos dados no seu conjunto de possíveis valores.
-
-## Média aritmética
-
-A média aritmética é definida pela soma das observações dividida pelo número total de observações.
-
-Exemplo: sejam $x_1, ..., x_n$ $n$ observações de uma variável $X$ qualquer. A média é dada pela expressão
-
-$\frac{\sum_{i=1}^{n}x_i}{n} = \frac{x_1 + x_2 + ... + x_n}{n}$
-
-No R:
-```{r}
-dfe %>%
-  pull(media) %>%
-  mean(na.rm=T)
-```
-
-
-## Média ponderada
-
-## Mediana
-
-A mediana é a observação que ocupa a posição central dos dados.
-
-Exemplo 1 (número ímpar de observações): vamos considerar o seguinte conjunto de observações: 3, 7, 10, 5, 2, 1, 1.
-
-Para calcular a mediana, primeiramente ordenamos os dados: 1, 1, 2, 3, 5, 7, 10.
-
-É fácil verificar que a observação que ocupa a posição central é o valor 3. Portanto, 3 é a mediana desse conjunto de valores.
-
-Exemplo 2 (número par de observações): vamos considerar agora o seguinte conjunto de observações: 15, 3, 2, 0, 9, 17.
-
-Ordenanando os dados, temos: 0, 2, 3, 9, 15, 17.
-
-Neste caso, a mediana será dada pela média entre as duas observações centrais, isto é, (3 + 9)/2 = 6.
-
-## Moda
-
-A moda é a observação mais frequente do conjunto de valores observados.
-
-Exemplo: no conjunto de observações {3, 5, 10, 11, 11, 20}, a observação 11 aparece 2 vezes enquanto as demais apenas 1 vez. Portanto, 11 é a moda desse conjunto.
-
-# Medidas de dispersão
-
-## Medidas de dispersão 
-
-O resumo de um conjunto de dados por uma única medida de posição central não traz informação sobre a variabilidade das observações.
-
-Um critério frequentemente usado para avaliar a dispersão de um conjunto de observações é aquele que mede a dispersão dos dados em torno da sua média.
-
-##
-
-```{r}
-dfe %>%
-  ggplot() +
-  geom_density(aes(fill=turma,x=media),alpha=.5,color=NA) +
-  geom_vline(data=.%>%group_by(turma)%>%
-               summarise(media=mean(media,na.rm=T)),
-             aes(color=turma,xintercept=media))
-  
-
-```
-
-
-
-## Amplitude e Quantis
-
-Amplitude = valor máximo - valor mínimo
-
-
-
-A mediana é uma medida que deixa metade dos dados abaixo dela e metade acima. De modo geral, podemos definir a medida $q_p$, $0 < p < 100$, tal que $p%$ das observações sejam menores que $q_p$. Esta medida é chamada de quantil de ordem $p$.
-
-Alguns quantis são bastante utilizados na prática. São eles
-
-$Q1 = q_{25\%}$ (primeiro quartil)
-
-$Q2 = q_{50\%}$ (mediana)
-
-$Q3 = q_{75\%}$ (terceiro quartil)
-
-Observe que os $q_{0\%}$ e $q_{100\%}$ denotam, respectivamente, o mínimo e o máximo de conjunto de dados.
-
-
-## Variância
-
-Sejam $x_1, x_2, ..., x_n$ $n$ observações de uma variável quantitativa $X$. Seja $\bar{x}$ a média dessas observações.
-
-Vamos observar, então, os desvios das observações em relação à média $\bar{x}$, isto é, $x_i - \bar{x}$, para $i = 1, ..., n$.
-
-**Ideia 1**: usar como medida de dispersão a soma desses desvios, isto é,
-
-$$
-\sum_{i=1}^{n}(x_i - \bar{x}).
-$$
-
-**Problema 1**: para qualquer conjunto de observações 
-
-$$
-\sum_{i=1}^{n}(x_i - \bar{x}) = 0.
-$$
-
-**Ideia 2**: considerar a soma do quadrado dos desvios, dada por 
-
-$$
-\sum_{i=1}^{n}(x_i - \bar{x})^2
-$$
-
-**Problema 2**: não podemos comparar conjuntos de observações de tamanhos diferentes.
-
-**Ideta 3**: utilizar a média desses desvios quadráticos. 
-
-Sendo assim, definimos a medida de dispersão conhecida como **variância** da seguinte forma:
-
-$$
-VAR(X) = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}
-$$
-
-## Desvio padrão
-
-A utilização da variância como medida de dispersão pode ainda causar um problema de interpretação, pois a sua dimensão é igual ao quadrado da dimensão dos dados. Sendo assim, costuma-se usar o desvio padrão, definido por
-
-$DP(X) = \sqrt{VAR(X)} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}}$
-
-
-## Coeficiente de variação
-
-Medida relativa -> que proporção da média é o desvio-padrão
-
-$\frac{dp}{média}$
-
-## Medidas de assimetria e curtose
-
-![](imgs/curtose.png)
-
-
-Coeficiente de Assimteria de Pearson = $média - moda$
-
-Assimetria adimensional = $\frac{média - moda}{dp}$
-
-Coeficiente quartílico de assimetria = $3*\frac{média-mediana}{dp}$
-
-# Surveys e planejamento
 

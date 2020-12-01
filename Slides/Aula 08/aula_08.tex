@@ -181,17 +181,18 @@ escalas}\label{dados-indicadores-e-escalas}}
 \CommentTok{\# Codebook dataMaid {-}{-} explicar}
 \KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{id, }\StringTok{"label"}\NormalTok{) \textless{}{-}}\StringTok{ "Identificação"}
 \KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{id, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Variável de identificação do aluno"}
-
+\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{media, }\StringTok{"label"}\NormalTok{) \textless{}{-}}\StringTok{ "Média final"}
 \KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{media, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Nota do aluno ao final da disciplina"}
 \KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{faltas, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Total de faltas ao longo do semestre"}
 \KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{turma, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Turma do aluno"}
-\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{idade, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Variável de identificação do aluno"}
-\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{interess, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Variável de identificação do aluno"}
-\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{tempocup, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Variável de identificação do aluno"}
-\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{escola, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Variável de identificação do aluno"}
+\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{idade, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Idade do aluno"}
+\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{interess, }\StringTok{"label"}\NormalTok{) \textless{}{-}}\StringTok{ "Interesse"}
+\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{interess, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Prioridade de interesse do aluno"}
+\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{tempocup, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Tempo de dedicação semanal do aluno"}
+\KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{escola, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Tipo de escola onde o aluno cursou ensino médio"}
 \KeywordTok{attr}\NormalTok{(dfe}\OperatorTok{$}\NormalTok{estcivil, }\StringTok{"shortDescription"}\NormalTok{) \textless{}{-}}\StringTok{ "Estado civil do aluno"}
 
-\CommentTok{\# makeCodebook(dfe,file = "cb\_dfe.pdf")}
+\CommentTok{\# makeCodebook(dfe,file = "cb\_dfe.rmd")}
 \end{Highlighting}
 \end{Shaded}
 
@@ -341,10 +342,9 @@ Usando o pacote psych
 \end{Shaded}
 
 \begin{verbatim}
-FALSE 
-FALSE Reliability analysis   
-FALSE  raw_alpha std.alpha G6(smc) average_r S/N median_r
-FALSE       0.74      0.74    0.69      0.42 2.9     0.41
+Reliability analysis   
+ raw_alpha std.alpha G6(smc) average_r S/N median_r
+      0.74      0.74    0.69      0.42 2.9     0.41
 \end{verbatim}
 \end{frame}
 
@@ -390,10 +390,16 @@ eleitorais}\label{indicadores-parlamentares-e-eleitorais}}
 
 \begin{frame}{Parlamentares - Número efetivo de partidos}
 \protect\hypertarget{parlamentares---nuxfamero-efetivo-de-partidos}{}
+\[ \Huge \frac{1}{\sum pe^{2}} \]
 \end{frame}
 
 \begin{frame}{Parlamentares - Renovação}
 \protect\hypertarget{parlamentares---renovauxe7uxe3o}{}
+\begingroup\Large
+
+\begin{equation*}
+Y_{ij} = [\beta_0 + \beta_1 (\text{Dose}-300)] + [\varepsilon_{ij}]
+\end{equation*} \endgroup
 \end{frame}
 
 \begin{frame}{Eleitorais}
@@ -425,9 +431,9 @@ eleitorais}\label{indicadores-parlamentares-e-eleitorais}}
 \end{Shaded}
 
 \begin{verbatim}
-FALSE    interess Casado Solteiro
-FALSE  Secundário  29.4%    45.0%
-FALSE   Principal  70.6%    55.0%
+   interess Casado Solteiro
+ Secundário  29.4%    45.0%
+  Principal  70.6%    55.0%
 \end{verbatim}
 \end{frame}
 
@@ -450,7 +456,7 @@ dispersão}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dfe }\OperatorTok{\%\textgreater{}\%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y=}\NormalTok{media,}\DataTypeTok{x=}\NormalTok{idade)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y=}\NormalTok{media,}\DataTypeTok{x=}\NormalTok{idade,}\DataTypeTok{group=}\NormalTok{escola)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom\_point}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom\_smooth}\NormalTok{(}\DataTypeTok{method=}\StringTok{"lm"}\NormalTok{)}
 \end{Highlighting}
@@ -516,7 +522,7 @@ No R:
 \end{Shaded}
 
 \begin{verbatim}
-FALSE [1] 74.375
+[1] 74.375
 \end{verbatim}
 \end{frame}
 
@@ -543,7 +549,7 @@ conjunto de observações: 15, 3, 2, 0, 9, 17.
 Ordenanando os dados, temos: 0, 2, 3, 9, 15, 17.
 
 Neste caso, a mediana será dada pela média entre as duas observações
-centrais, isto é, (3 + 9)/2 = 6.
+centrais, isto é, \((3 + 9)/2 = 6\).
 \end{frame}
 
 \begin{frame}{Moda}
@@ -566,22 +572,6 @@ não traz informação sobre a variabilidade das observações.
 Um critério frequentemente usado para avaliar a dispersão de um conjunto
 de observações é aquele que mede a dispersão dos dados em torno da sua
 média.
-\end{frame}
-
-\begin{frame}[fragile]{}
-\protect\hypertarget{section-4}{}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dfe }\OperatorTok{\%\textgreater{}\%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom\_density}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{turma,}\DataTypeTok{x=}\NormalTok{media),}\DataTypeTok{alpha=}\NormalTok{.}\DecValTok{5}\NormalTok{,}\DataTypeTok{color=}\OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom\_vline}\NormalTok{(}\DataTypeTok{data=}\NormalTok{.}\OperatorTok{\%\textgreater{}\%}\KeywordTok{group\_by}\NormalTok{(turma)}\OperatorTok{\%\textgreater{}\%}
-\StringTok{               }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{media=}\KeywordTok{mean}\NormalTok{(media,}\DataTypeTok{na.rm=}\NormalTok{T)),}
-             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{color=}\NormalTok{turma,}\DataTypeTok{xintercept=}\NormalTok{media))}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{aula_08_files/figure-beamer/unnamed-chunk-10-1.pdf}
 \end{frame}
 
 \begin{frame}{Amplitude e Quantis}
@@ -617,32 +607,38 @@ Vamos observar, então, os desvios das observações em relação à média
 \textbf{Ideia 1}: usar como medida de dispersão a soma desses desvios,
 isto é,
 
-\[
+\[ \Large
 \sum_{i=1}^{n}(x_i - \bar{x}).
 \]
+\end{frame}
 
+\begin{frame}{}
+\protect\hypertarget{section-4}{}
 \textbf{Problema 1}: para qualquer conjunto de observações
 
-\[
+\[ \Large
 \sum_{i=1}^{n}(x_i - \bar{x}) = 0.
 \]
 
 \textbf{Ideia 2}: considerar a soma do quadrado dos desvios, dada por
 
-\[
+\[ \Large
 \sum_{i=1}^{n}(x_i - \bar{x})^2
 \]
+\end{frame}
 
+\begin{frame}{}
+\protect\hypertarget{section-5}{}
 \textbf{Problema 2}: não podemos comparar conjuntos de observações de
 tamanhos diferentes.
 
-\textbf{Ideta 3}: utilizar a média desses desvios quadráticos.
+\textbf{Ideia 3}: utilizar a média desses desvios quadráticos.
 
 Sendo assim, definimos a medida de dispersão conhecida como
 \textbf{variância} da seguinte forma:
 
-\[
-VAR(X) = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}
+\[ \Large
+var(X) = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}
 \]
 \end{frame}
 
@@ -653,14 +649,50 @@ problema de interpretação, pois a sua dimensão é igual ao quadrado da
 dimensão dos dados. Sendo assim, costuma-se usar o desvio padrão,
 definido por
 
-\(DP(X) = \sqrt{VAR(X)} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}}\)
+\[ \Large
+dp(X) = \sqrt{var(X)} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}}
+\]
 \end{frame}
 
 \begin{frame}{Coeficiente de variação}
 \protect\hypertarget{coeficiente-de-variauxe7uxe3o}{}
 Medida relativa -\textgreater{} que proporção da média é o desvio-padrão
 
-\(\frac{dp}{média}\)
+\[ \Huge 
+\frac{dp}{média}
+\]
+\end{frame}
+
+\begin{frame}[fragile]{vendo média, mediana e distribuições}
+\protect\hypertarget{vendo-muxe9dia-mediana-e-distribuiuxe7uxf5es}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfe }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_density}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{media),}\DataTypeTok{alpha=}\NormalTok{.}\DecValTok{5}\NormalTok{,}\DataTypeTok{color=}\OtherTok{NA}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_vline}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ . }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\CommentTok{\#group\_by(1) \%\textgreater{}\%}
+\StringTok{               }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{media\_=}\KeywordTok{mean}\NormalTok{(media,}\DataTypeTok{na.rm=}\NormalTok{T),}\DataTypeTok{mediana=}\KeywordTok{median}\NormalTok{(media,}\DataTypeTok{na.rm =}\NormalTok{ T)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{               }\KeywordTok{pivot\_longer}\NormalTok{(media\_}\OperatorTok{:}\NormalTok{mediana),}
+             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{xintercept=}\NormalTok{value,}\DataTypeTok{linetype=}\NormalTok{name))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aula_08_files/figure-beamer/unnamed-chunk-10-1.pdf}
+\end{frame}
+
+\begin{frame}[fragile]{vendo média, mediana e distribuições}
+\protect\hypertarget{vendo-muxe9dia-mediana-e-distribuiuxe7uxf5es-1}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfe }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_density}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{turma,}\DataTypeTok{x=}\NormalTok{media),}\DataTypeTok{alpha=}\NormalTok{.}\DecValTok{5}\NormalTok{,}\DataTypeTok{color=}\OtherTok{NA}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_vline}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ . }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{group\_by}\NormalTok{(turma) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{               }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{media\_=}\KeywordTok{mean}\NormalTok{(media,}\DataTypeTok{na.rm=}\NormalTok{T),}\DataTypeTok{mediana=}\KeywordTok{median}\NormalTok{(media,}\DataTypeTok{na.rm =}\NormalTok{ T)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{               }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\DataTypeTok{media=}\NormalTok{media\_) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{pivot\_longer}\NormalTok{(media}\OperatorTok{:}\NormalTok{mediana) ,}
+             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{color=}\NormalTok{turma,}\DataTypeTok{xintercept=}\NormalTok{value,}\DataTypeTok{linetype=}\NormalTok{name))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aula_08_files/figure-beamer/unnamed-chunk-11-1.pdf}
 \end{frame}
 
 \begin{frame}{Medidas de assimetria e curtose}

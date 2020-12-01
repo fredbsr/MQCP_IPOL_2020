@@ -1,0 +1,805 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  9pt,
+  ignorenonframetext,
+  aspectratio=169]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usetheme[]{Berkeley}
+\usecolortheme{dove}
+\usefonttheme{structurebold}
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdfauthor={Frederico Bertholini},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\newif\ifbibliography
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+
+\subtitle{Métodos Quantitativos Aplicados à Ciência Política}
+\author{Frederico Bertholini}
+\date{23.nov.2020}
+
+\begin{document}
+
+\begin{frame}[allowframebreaks]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+\hypertarget{medidas-resumo}{%
+\section{Medidas-resumo}\label{medidas-resumo}}
+
+\begin{frame}{Medidas-resumo}
+Nós vimos como utilizar gráficos e tabelas para visualizar dados e
+relações entre eles. Além de gráficos, queremos uma descrição numérica
+que mensure certas características importantes dos dados.
+
+Medidas resumos são números que nos dão uma ideia de certas
+características de interesse dos dados. Elas podem ser pensadas como um
+passo além dos gráficos, reduzindo ainda mais a informação dos dados até
+chegar em um número.
+\end{frame}
+
+\begin{frame}{Classificação}
+\protect\hypertarget{classificauxe7uxe3o}{}
+Medidas resumo podem ser de dois tipos:
+
+\begin{itemize}
+\item
+  Medidas de posição ou de tendência central
+\item
+  Medidas de dispersão
+\end{itemize}
+
+Medidas de posição nos dão uma ideia de um valor em torno do qual os
+dados se agrupam. Elas nos trazem uma ideia da grandeza dos dados.
+
+Medidas de dispersão nos dizem quanto os dados estão próximos ou
+distantes uns dos outros (e da medida de posição). Elas nos dão uma
+ideia da semelhança dos dados.
+\end{frame}
+
+\hypertarget{medidas-de-posiuxe7uxe3o}{%
+\section{Medidas de posição}\label{medidas-de-posiuxe7uxe3o}}
+
+\begin{frame}{Medidas de posição}
+Medidas de posição nos dão uma ideia de um valor em torno do qual os
+dados se agrupam. Elas nos trazem uma ideia da grandeza dos dados.
+
+As medidas de posição são a média, a mediana, a moda e os quantis (em
+especial os quartis e os percentis)
+\end{frame}
+
+\begin{frame}[fragile]{Moda}
+\protect\hypertarget{moda}{}
+A moda é a observação mais frequente do conjunto de valores observados.
+
+Exemplo: no conjunto de observações \{3, 5, 10, 11, 11, 20\}, a
+observação 11 aparece 2 vezes enquanto as demais apenas 1 vez. Portanto,
+11 é a moda desse conjunto.
+
+\scriptsize
+
+Observação 1: Quando a variável é contínua, a tabela e o histograma são
+construídos com base em classes. A moda, portanto, será a classe que
+aparece com maior frequência. Alguns autores denominam esta classe de
+classe modal, sugerindo que ela não é a moda, mas sim a classe que
+contém a moda.
+
+Observação 2: Algumas distribuições apresentam duas modas. Essas
+distribuições são chamadas de bimodais. De fato, distribuições podem ter
+um número qualquer de modas sendo chamadas de multimodais. O que
+significa um histograma de notas de prova bimodal?
+
+\small
+
+No R: não há uma função base R, pode-se usar o pacote \texttt{modeest}
+\end{frame}
+
+\begin{frame}[fragile]{Média}
+\protect\hypertarget{muxe9dia}{}
+A média aritmética é definida pela soma das observações dividida pelo
+número total de observações.
+
+Exemplo: sejam \(x_1, ..., x_n\) \(n\) observações de uma variável \(X\)
+qualquer. A média é dada pela expressão
+
+\(\Large \frac{\sum_{i=1}^{n}x_i}{n} = \frac{x_1 + x_2 + ... + x_n}{n}\)
+
+No R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfe }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{pull}\NormalTok{(media) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mean}\NormalTok{(}\DataTypeTok{na.rm=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 74.375
+\end{verbatim}
+
+Média ponderada - mesma ideia.
+\end{frame}
+
+\begin{frame}[fragile]{Mediana}
+\protect\hypertarget{mediana}{}
+A mediana é a observação que ocupa a posição central dos dados.
+
+\textbf{Exemplo 1} (número ímpar de observações): vamos considerar o
+seguinte conjunto de observações: 3, 7, 10, 5, 2, 1, 1.
+
+Para calcular a mediana, primeiramente ordenamos os dados: 1, 1, 2, 3,
+5, 7, 10.
+
+É fácil verificar que a observação que ocupa a posição central é o valor
+3. Portanto, 3 é a mediana desse conjunto de valores.
+
+\textbf{Exemplo 2} (número par de observações): 15, 3, 2, 0, 9, 17.
+
+Ordenanando os dados, temos: 0, 2, 3, 9, 15, 17.
+
+Neste caso, a mediana será dada pela média entre as duas observações
+centrais, isto é, \((3 + 9)/2 = 6\).
+
+No R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfe }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{pull}\NormalTok{(media) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{median}\NormalTok{(}\DataTypeTok{na.rm=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 73.75
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Quantis}
+\protect\hypertarget{quantis}{}
+A mediana é uma medida que deixa metade dos dados abaixo dela e metade
+acima. De modo geral, podemos definir a medida \(q_p\), \(0 < p < 100\),
+tal que \(p%
+\) das observações sejam menores que \(q_p\). Esta medida é chamada de
+quantil de ordem \(p\).
+
+Alguns quantis são bastante utilizados na prática. São eles
+
+\(Q1 = q_{25\%}\) (primeiro quartil)
+
+\(Q2 = q_{50\%}\) (mediana)
+
+\(Q3 = q_{75\%}\) (terceiro quartil)
+
+Observe que os \(q_{0\%}\) e \(q_{100\%}\) denotam, respectivamente, o
+mínimo e o máximo de conjunto de dados.
+
+No R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfe }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{pull}\NormalTok{(media) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{quantile}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   0%   25%   50%   75%  100% 
+40.00 70.00 73.75 80.00 95.00 
+\end{verbatim}
+\end{frame}
+
+\hypertarget{medidas-de-dispersuxe3o}{%
+\section{Medidas de dispersão}\label{medidas-de-dispersuxe3o}}
+
+\begin{frame}{Medidas de dispersão}
+O resumo de um conjunto de dados por uma única medida de posição central
+não traz informação sobre a variabilidade das observações.
+
+Um critério frequentemente usado para avaliar a dispersão de um conjunto
+de observações é aquele que mede a dispersão dos dados em torno da sua
+média.
+\end{frame}
+
+\begin{frame}{Amplitude}
+\protect\hypertarget{amplitude}{}
+Amplitude = valor máximo - valor mínimo
+\end{frame}
+
+\begin{frame}{Variância}
+\protect\hypertarget{variuxe2ncia}{}
+Sejam \(x_1, x_2, ..., x_n\) \(n\) observações de uma variável
+quantitativa \(X\). Seja \(\bar{x}\) a média dessas observações.
+
+Vamos observar, então, os desvios das observações em relação à média
+\(\bar{x}\), isto é, \(x_i - \bar{x}\), para \(i = 1, ..., n\).
+
+\textbf{Ideia 1}: usar como medida de dispersão a soma desses desvios,
+isto é,
+
+\[ \Large
+\sum_{i=1}^{n}(x_i - \bar{x}).
+\]
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section}{}
+\textbf{Problema 1}: para qualquer conjunto de observações
+
+\[ \Large
+\sum_{i=1}^{n}(x_i - \bar{x}) = 0.
+\]
+
+\textbf{Ideia 2}: considerar a soma do quadrado dos desvios, dada por
+
+\[ \Large
+\sum_{i=1}^{n}(x_i - \bar{x})^2
+\]
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-1}{}
+\textbf{Problema 2}: não podemos comparar conjuntos de observações de
+tamanhos diferentes.
+
+\textbf{Ideia 3}: utilizar a média desses desvios quadráticos.
+
+Sendo assim, definimos a medida de dispersão conhecida como
+\textbf{variância} da seguinte forma:
+
+\[ \Large
+var(X) = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}
+\]
+\end{frame}
+
+\begin{frame}{Desvio padrão}
+\protect\hypertarget{desvio-padruxe3o}{}
+A utilização da variância como medida de dispersão pode ainda causar um
+problema de interpretação, pois a sua dimensão é igual ao quadrado da
+dimensão dos dados. Sendo assim, costuma-se usar o desvio padrão,
+definido por
+
+\[ \Large
+dp(X) = \sqrt{var(X)} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}}
+\]
+\end{frame}
+
+\begin{frame}{Coeficiente de variação}
+\protect\hypertarget{coeficiente-de-variauxe7uxe3o}{}
+Medida relativa -\textgreater{} que proporção da média é o desvio-padrão
+
+\[ \Huge 
+\frac{dp}{média}
+\]
+\end{frame}
+
+\begin{frame}[fragile]{vendo média, mediana e distribuições}
+\protect\hypertarget{vendo-muxe9dia-mediana-e-distribuiuxe7uxf5es}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfe }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_density}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{turma,}\DataTypeTok{x=}\NormalTok{media),}\DataTypeTok{alpha=}\NormalTok{.}\DecValTok{5}\NormalTok{,}\DataTypeTok{color=}\OtherTok{NA}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_vline}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ . }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{group\_by}\NormalTok{(turma) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{               }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{media\_=}\KeywordTok{mean}\NormalTok{(media,}\DataTypeTok{na.rm=}\NormalTok{T),}\DataTypeTok{mediana=}\KeywordTok{median}\NormalTok{(media,}\DataTypeTok{na.rm =}\NormalTok{ T)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{               }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\DataTypeTok{media=}\NormalTok{media\_) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{pivot\_longer}\NormalTok{(media}\OperatorTok{:}\NormalTok{mediana) ,}
+             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{color=}\NormalTok{turma,}\DataTypeTok{xintercept=}\NormalTok{value,}\DataTypeTok{linetype=}\NormalTok{name))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aula_09_files/figure-beamer/unnamed-chunk-4-1.pdf}
+\end{frame}
+
+\begin{frame}{Medidas de assimetria e curtose}
+\protect\hypertarget{medidas-de-assimetria-e-curtose}{}
+\includegraphics{imgs/curtose.png}
+
+Coeficiente de Assimteria de Pearson = \(média - moda\)
+
+Assimetria adimensional = \(\large\frac{média - moda}{dp}\)
+
+\href{https://docs.ropensci.org/skimr/}{pacote skimr}
+\end{frame}
+
+\hypertarget{amostras}{%
+\section{Amostras}\label{amostras}}
+
+\begin{frame}{Terminologia 1/n}
+\protect\hypertarget{terminologia-1n}{}
+\emph{Unidade} é um único indivíduo, entidade ou objeto a ser medido ou
+observado na pesquisa.
+
+\emph{População} é o conjunto de todas as unidades para as quais se
+deseja fazer inferência.
+
+\emph{População alvo} é a parte da \emph{População} para a qual se
+gostaria de obter informação. Seja um estudo sobre a fecundidade da
+\emph{População} de uma determinada área geográfica. A \emph{População
+Alvo} neste caso são apenas as mulheres em idade fértil.
+
+\emph{População de pesquisa} é a população a ser efetivamente coberta
+pela pesquisa. Algumas unidades ou grupos de unidades podem ser
+inacessíveis ou com custo-benefício que não se mostre interessante para
+a pesquisa.
+
+\scriptsize
+
+Quando ocorrer diferença entre a \emph{população alvo} e a
+\emph{população de pesquisa}, o pesquisador responsável deve procurar
+medir essa diferença e tratar de revelar com clareza que partes da
+\emph{população alvo} ficaram de fora da \emph{população de pesquisa},
+de modo a permitir que os usuários dos resultados da pesquisa possam
+avaliar a relevância e aderência dos resultados da pesquisa aos seus
+objetivos. A diferença entre a \emph{população de pesquisa} e a
+\emph{população alvo} dá origem aos chamados \emph{erros de cobertura}.
+Pesquisas de boa qualidade adotam estratégias para eliminar ou minimizar
+tais erros.
+\end{frame}
+
+\begin{frame}{Terminologia 2/n}
+\protect\hypertarget{terminologia-2n}{}
+\emph{Amostra} é o conjunto de unidades que selecionamos da
+\emph{população de pesquisa} para medir ou observar através da pesquisa.
+
+\emph{Amostra efetiva} é o conjunto de unidades que selecionamos da
+\emph{população de pesquisa} e para as quais conseguimos de fato obter /
+medir / observar as variáveis de interesse através da pesquisa.
+
+\emph{Cadastro} é uma lista contendo a identificação das unidades que
+compõem a \emph{população de pesquisa}, de onde a amostra é selecionada.
+Algumas pesquisas podem utilizar mais de um cadastro para selecionar a
+correspondente amostra.
+
+\emph{Unidade de referência} ou \emph{unidade de investigação} ou
+\emph{unidade de observação} é uma unidade (componente da população)
+sobre a qual são obtidas as informações de interesse da pesquisa.
+
+\emph{Unidade informante} ou \emph{unidade de informação} é uma unidade
+que fornece a informação de interesse sobre uma ou mais unidades de
+referência.
+
+\emph{Unidade de análise} é uma unidade à qual a análise e inferência
+são dirigidas.
+
+\emph{Unidade de amostragem} é uma unidade que pode ser selecionada para
+a amostra numa das etapas do processo de amostragem.
+
+\emph{Domínio de análise / interesse} é um conjunto de unidades de
+análise especificado como de interesse para fins de sumarização de
+dados, tabulação, inferência ou análise.
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-2}{}
+\includegraphics{imgs/parametro_estat.png}
+\end{frame}
+
+\begin{frame}{Propriedades dos estimadores}
+\protect\hypertarget{propriedades-dos-estimadores}{}
+\includegraphics{imgs/prop_estimadores.png}
+\end{frame}
+
+\begin{frame}{Tipos de amostras}
+\protect\hypertarget{tipos-de-amostras}{}
+\textbf{Aleatória simples:} sorteio simples de indivíduos dentro de uma
+população.
+
+\textbf{Sistemática:} sorteio dentro de listas aleatoriamente
+atribuídas.
+
+\textbf{Estratificada:} divide em estratos (características) e sorteia
+dentros dos estratos.
+
+\textbf{Por conglomerados:} seleção de unidades geográficas.
+
+\textbf{Por cotas:} \emph{(NÃO PROBABILÍSTICA)} atingimento de
+percentuais pré-estabelecidos, com base na população.
+\end{frame}
+
+\begin{frame}{Um jogo com bolas vermelhas - tigela com 2.400 bolinhas}
+\protect\hypertarget{um-jogo-com-bolas-vermelhas---tigela-com-2.400-bolinhas}{}
+\includegraphics{imgs/sampling_bowl_1.jpg}
+\end{frame}
+
+\begin{frame}{Um jogo com bolas vermelhas - pá que pesca 50 bolinhas}
+\protect\hypertarget{um-jogo-com-bolas-vermelhas---puxe1-que-pesca-50-bolinhas}{}
+\includegraphics{imgs/sampling_bowl_3_cropped.jpg}
+\end{frame}
+
+\begin{frame}[fragile]{Proporção de bolinhas vermelhas - No R}
+\protect\hypertarget{proporuxe7uxe3o-de-bolinhas-vermelhas---no-r}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(moderndive)}
+\NormalTok{tactile\_prop\_red }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ prop\_red)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \FloatTok{0.05}\NormalTok{, }\DataTypeTok{boundary =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{color =} \StringTok{"white"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_y\_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"\% de bolas vermelhas entre as 50 sorteadas"}\NormalTok{,}\DataTypeTok{y =} \StringTok{"Frequência"}\NormalTok{,}\DataTypeTok{title=}\StringTok{"33 alunos"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aula_09_files/figure-beamer/unnamed-chunk-5-1.pdf}
+\end{frame}
+
+\begin{frame}[fragile]{Uma pá virtual usada 33 vezes}
+\protect\hypertarget{uma-puxe1-virtual-usada-33-vezes}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual \textless{}{-}}\StringTok{ }\NormalTok{bowl }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{rep\_sample\_n}\NormalTok{(}\DataTypeTok{size =} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{pa\_virtual }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{num\_red =} \KeywordTok{sum}\NormalTok{(color }\OperatorTok{==}\StringTok{ "red"}\NormalTok{)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prop\_red =}\NormalTok{ num\_red }\OperatorTok{/}\StringTok{ }\DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+  replicate num_red prop_red
+      <int>   <int>    <dbl>
+1         1      25      0.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{amostra\_virtual \textless{}{-}}\StringTok{ }\NormalTok{bowl }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{rep\_sample\_n}\NormalTok{(}\DataTypeTok{size =} \DecValTok{50}\NormalTok{, }\DataTypeTok{reps =} \DecValTok{33}\NormalTok{)}
+
+\NormalTok{virtual\_prop\_red \textless{}{-}}\StringTok{ }\NormalTok{amostra\_virtual }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group\_by}\NormalTok{(replicate) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{red =} \KeywordTok{sum}\NormalTok{(color }\OperatorTok{==}\StringTok{ "red"}\NormalTok{)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prop\_red =}\NormalTok{ red }\OperatorTok{/}\StringTok{ }\DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{33 amostras}
+\protect\hypertarget{amostras-1}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{virtual\_prop\_red }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ prop\_red)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \FloatTok{0.05}\NormalTok{, }\DataTypeTok{boundary =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{color =} \StringTok{"white"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_y\_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"\% de bolas vermelhas entre as 50 sorteadas"}\NormalTok{,}\DataTypeTok{y =} \StringTok{"Frequência"}\NormalTok{,}
+       \DataTypeTok{title=}\StringTok{"33 pás virtuais"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aula_09_files/figure-beamer/unnamed-chunk-7-1.pdf}
+\end{frame}
+
+\begin{frame}[fragile]{1000 amostras}
+\protect\hypertarget{amostras-2}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{amostra\_virtual \textless{}{-}}\StringTok{ }\NormalTok{bowl }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{rep\_sample\_n}\NormalTok{(}\DataTypeTok{size =} \DecValTok{50}\NormalTok{, }\DataTypeTok{reps =} \DecValTok{1000}\NormalTok{)}
+
+\NormalTok{virtual\_prop\_red \textless{}{-}}\StringTok{ }\NormalTok{amostra\_virtual }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group\_by}\NormalTok{(replicate) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{red =} \KeywordTok{sum}\NormalTok{(color }\OperatorTok{==}\StringTok{ "red"}\NormalTok{)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{prop\_red =}\NormalTok{ red }\OperatorTok{/}\StringTok{ }\DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{1000}
+\protect\hypertarget{section-3}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{virtual\_prop\_red }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ prop\_red)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \FloatTok{0.05}\NormalTok{, }\DataTypeTok{boundary =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{color =} \StringTok{"white"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"\% de bolas vermelhas entre as 50 sorteadas"}\NormalTok{,}\DataTypeTok{y =} \StringTok{"Frequência"}\NormalTok{,}
+       \DataTypeTok{title=}\StringTok{"1000 pás virtuais"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aula_09_files/figure-beamer/unnamed-chunk-9-1.pdf}
+\end{frame}
+
+\begin{frame}{Agora usando pás de tamanhos diferentes}
+\protect\hypertarget{agora-usando-puxe1s-de-tamanhos-diferentes}{}
+\includegraphics{aula_09_files/figure-beamer/unnamed-chunk-10-1.pdf}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\protect\hypertarget{section-4}{}
+\begin{verbatim}
+# A tibble: 3 x 2
+      n     sd
+  <dbl>  <dbl>
+1    25 0.0967
+2    50 0.0674
+3   100 0.0470
+\end{verbatim}
+
+Erro padrão: \[ 
+\Huge
+SE=\frac{SD}{\sqrt{n}} 
+\]
+\end{frame}
+
+\begin{frame}{Teorema Limite Central}
+\protect\hypertarget{teorema-limite-central}{}
+O TLC implica que, para amostras grandes, a média amostral terá
+distribuição normal independentemente da distribuição da variável de
+interesse na população. Isto implica que, se tivermos uma amostra
+grande, a distribuição amostral da média se aproximará de uma
+distribuição normal.
+
+Quanto é ``um número grande''? Regra de bolso: pelo menos 30. Se o
+número de elementos na amostra for menor que 30, a distribuição amostral
+da média só será normal se a população tiver distribuição normal.
+
+\href{https://www.youtube.com/watch?v=jvoxEYmQHNM\&feature=youtu.be}{Coelhos,
+Dragões e o mundo ``normal''}
+\end{frame}
+
+\begin{frame}{O mundo normal}
+\protect\hypertarget{o-mundo-normal}{}
+\includegraphics{imgs/normal_percent.png}
+\end{frame}
+
+\begin{frame}{Recapitulando}
+\protect\hypertarget{recapitulando}{}
+\begin{itemize}
+\tightlist
+\item
+  Padronização, tabelas, t de student\ldots{} \[
+  \Huge
+  z=\frac{x-\mu}{\sigma}
+  \]
+\end{itemize}
+\end{frame}
+
+\hypertarget{estimativas-intervalares}{%
+\section{Estimativas intervalares}\label{estimativas-intervalares}}
+
+\begin{frame}{Estimativas intervalares}
+Deseja-se estimar a proporção de bolinhas vermelhas na tigela.
+Recolhe-se uma amostra de 100 bolinhas e verifica-se que esta amostra
+tem média amostral 0.379 e desvio padrão 0,04.
+
+Para estimar a proporção na tigela, dispõem-se de duas formas gerais de
+estimação:
+
+Estimação por ponto: fornecemos um número que, acreditamos, estará perto
+da proporção. Que número seria esse?
+
+Estimação por intervalo: fornecemos um intervalo que, com determinado
+nível de confiança, conterá o valor real da proporção.
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-5}{}
+\includegraphics{imgs/reliable-percentile-1.png}
+\end{frame}
+
+\begin{frame}{Intervalos de confiança}
+\protect\hypertarget{intervalos-de-confianuxe7a}{}
+Vamos supor que \(X_1, ..., X_n\) seja uma a. a. da v. a.
+\(X \sim N(\mu, \sigma^2)\). A partir desta amostra, queremos construir
+um intervalo de confiança para \(\mu\), isto é, um intervalo que tenha
+grande probabilidade de conter o verdadeiro valor de \(\mu\).
+
+Sabemos que \(\bar{X}\) é um bom estimador para \(\mu\). Sendo assim, é
+razoável pensar em minimizar o erro dado por
+
+\[
+\text{erro } = |\bar{X} - \mu|.
+\]
+
+Mais precisamente, podemos que a probabilidade desse erro ser menor que
+um determinado \(\epsilon\) seja grande, digamos, 95\%. Simbolicamente,
+temos
+
+\[
+P(|\bar{X} - \mu| < \epsilon) = 95\%.
+\]
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-6}{}
+Desenvolvendo a expressão anterior, temos que
+
+\[
+P(\bar{X} - \epsilon < \mu < \bar{X} + \epsilon) = 95\%.
+\]
+
+Portanto, um intervalo para \(\mu\) com \emph{confiança} de 95\% é dado
+por \((\bar{X} - \epsilon, \bar{X} + \epsilon)\). Não é difícil mostrar
+que, neste caso,
+
+\[
+\epsilon = z(95\%) \sqrt{\frac{\sigma^2}{n}},
+\] em que \(z(95\%)\) é o número que satisfaz
+
+\[
+P(-z(95\%) < Z < z(95\%)) = 95\%.
+\]
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-7}{}
+Neste contexto, o valor \(95\%\) é chamado \emph{nível de confiança} do
+intervalo. Em um caso geral, denotando essa quantidade por \(\gamma\), o
+intervalo de confiança para a média \(\mu\) é dado por
+
+\[
+IC(\mu, \gamma) = \left(\bar{X} - z(\gamma) \sqrt{\frac{\sigma^2}{n}}, \bar{X} + z(\gamma) \sqrt{\frac{\sigma^2}{n}}\right).
+\]
+\end{frame}
+
+\begin{frame}{Escrito de forma mais simples e adequado a proporções}
+\protect\hypertarget{escrito-de-forma-mais-simples-e-adequado-a-proporuxe7uxf5es}{}
+Limite superior \(=\bar{X} + t * SE\)
+
+Limite inferior \(=\bar{X} - t * SE\)
+\end{frame}
+
+\begin{frame}{Tamanho da amostra - a gente não vai fazer isso}
+\protect\hypertarget{tamanho-da-amostra---a-gente-nuxe3o-vai-fazer-isso}{}
+\[
+n=\frac{z^{2} .(p . q)}{e^{2}}
+\] \[
+n=\left(\frac{t . s}{e}\right)^{2}
+\]
+\end{frame}
+
+\begin{frame}{Margem de erro}
+\protect\hypertarget{margem-de-erro}{}
+\[
+e=z . \sqrt{\frac{p . q}{n}}
+\]
+\end{frame}
+
+\hypertarget{surveys-e-planejamento}{%
+\section{Surveys e planejamento}\label{surveys-e-planejamento}}
+
+\begin{frame}{Surveys e planejamento}
+\includegraphics{imgs/ProcessodePesquisaModelo.png}
+\end{frame}
+
+\hypertarget{inferuxeancia-e-testes-de-hipuxf3tese}{%
+\section{Inferência e testes de
+hipótese}\label{inferuxeancia-e-testes-de-hipuxf3tese}}
+
+\begin{frame}{Inferência e testes de hipótese}
+Modelos probabilísticos e normal
+
+Hipóteses e testes de hipóteses (NHST)
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-8}{}
+\includegraphics{imgs/tabela_erros.png}
+\end{frame}
+
+\end{document}

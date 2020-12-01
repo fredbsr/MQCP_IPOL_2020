@@ -1,0 +1,304 @@
+---
+title: "Testes de hipótese"
+author: "Frederico Bertholini"
+date: "30.nov.2020"
+output: 
+  
+  tufte_handout:
+  beamer_presentation:
+    theme: Berkeley
+    colortheme: dove
+    fonttheme: structurebold
+    keep_tex: yes
+    toc: yes
+    number_sections: yes
+    slide_level: 2
+    highlight: tango
+  ioslides_presentation:
+    highlight: tango
+  slidy_presentation:
+    highlight: tango
+fontsize: 9pt
+classoption: "aspectratio=169"
+subtitle: Métodos Quantitativos Aplicados à Ciência Política
+editor_options: 
+  chunk_output_type: console
+---
+
+# Modelo Linear Simples {#aula1}
+
+Nesta primeira aula, veremos um dos modelos mais básicos, mas também um dos mais utilizados, de regressão: o modelo linear simples estimado por mínimos quadrados ordinários (MQO).^[Para um explicação rápida de como esse método de estimação funciona, [ver aqui](https://fmeireles.shinyapps.io/modelagem_r/).] Entre outros, aprenderamos a visualizar relações lineares bivariadas; a usar a função básica para estimar modelos lineares, `lm`; e a obter resultados detalhados de um modelo. Também usaremos alguns dados, que estão na pasta de materiais desta aula.
+
+
+## Visualizando relações entre duas variáveis
+
+Podemos usar gráficos para visualizar relações entre variáveis. Podemos, por exemplo, criar duas variáveis contínuas, geradas aleatoriamente com a função `rnorm`, e plotar sua relação com um gráfico de pontos.
+
+```{r, eval=FALSE}
+set.seed(123) # Para replicar o conteudo da aula
+
+x <- rnorm(100)
+y <- rnorm(100)
+
+plot(y ~ x)
+
+```
+
+É possível ver que as variáveis que criamos, `y` e `x`, não parecem ter relação. Na verdade, os pontos no gráficos estão dispersos, o que dificulta detectar algum padrão.
+
+Para investigarmos isso detidamente, usamos um modelo linear estimado por mínimos quadrados ordinários (MQO). A função que estima esse tipo de modelo chama-se `lm`, e ela está contida no `R-base`. Portanto, não precisamos carregar nenhum pacote para usá-la, basta executar o seguinte código:
+
+```{r, eval=FALSE}
+lm(y ~ x)
+```
+
+A utilização da função `lm` é simples. Em primeiro lugar, precisamos passar como argumento da função uma fórmula contendo a especificação do nosso modelo. No exemplo, `y` é nossa variável dependente e, assim, aparece do lado direito do operador `~`. `x`, dessa forma, é nossa variável independente, ou explicativa, ou, ainda, preditora. 
+
+Podemos salvar os resultados de um modelo em um objeto para facilitar a sua manipulação.
+
+```{r, eval=FALSE}
+meu_modelo <- lm(y ~ x)
+```
+
+Uma das vantagens disso é que, agora, podemos usá-lo para traçar um reta com valores preditos de `y` em relação a `x`, que resume a relação entre ambas, no gráfico que criamos anteriormente. Para tanto, usamos apenas a função `abline`.
+
+```{r, eval=FALSE}
+plot(y ~ x)
+abline(meu_modelo)
+```
+
+Realmente, não parece haver relação substantiva entre `y` e `x`, como indica a melhor reta estimada via MQO.
+
+## Exercícios I {-}
+
+- 1) Crie duas variáveis aleatórias, `var1` e `var2`, usando a função `rnorm`. Cada variável precisa ter 1000 observações (linhas);
+- 2) Com essas variáveis, rode e salve um modelo de regressão linear simples no objeto `modelo_simples`, usando `var1` como variável dependente e `var2` como independente;
+- 3) Construa um gráfico *scatterplot* que mostre a relação entre essas variáveis e que inclua uma reta que sintetize a relação entre elas (a partir das informações salvas em `modelo_simples`).
+
+
+## Visualizando relações entre variáveis em um banco
+
+Daqui até o fim dessa aula, usaremos um banco de dados como exemplo para praticarmos o básico de construção de modelos bivariados. Esse arquivo, com algumas variáveis selecionadas do Atlas do Desenvolvimento Humano para municípios no ano de 2010 (http://atlasbrasil.org.br/2013/pt/download/), chama-se `atlas_condensado.csv`, e está nos materiais complementares dessa aula. Como ele está no formato `.csv`, podemos carregá-lo com a função `read_csv` do pacote `readr`, salvando o banco num objeto `atlas`.
+
+```{r, eval=FALSE}
+library(readr)
+atlas <- read_csv("atlas_condensado.csv")
+```
+
+A função `read_csv` já indica o nome e a classe de cada variável no objeto `atlas`, onde salvamos os dados. Usando `names` e `head`, é possível ver mais detalhadamente esse `data.frame`.
+
+```{r, eval=FALSE}
+names(atlas)
+head(atlas)
+```
+
+Em particular, vamos trabalhar com duas dessas variáveis: a `t_agua`, que indica a percentagem de domicílios com água encanada, e a `mort1`, que indica o número de crianças que não sobreviveram ao primeiro ano de idade em cada 1000 crianças nascidas no município. Nosso objetivo será investigar se existe relação entre disponibilidade de água encanada (nossa variável independente) e mortalidade infantil (nossa variável dependente) usando um modelo linear por MQO. Como essas variáveis estão dentro de um banco de dados, existe um modo mais fácil de visualizar a relação entre elas usando o pacote `ggplot2`. Especificamente, esse pacote contém um `geom` chamado `geom_smooth` que serve para plotar uma curva trançando a relação entre duas (ou mais, como veremos adiante) variáveis. Criamos esse gráfico com o seguinte código:
+
+```{r, eval=FALSE}
+library(ggplot2)
+
+ggplot(atlas, aes(x = t_lixo, y = mort1)) + 
+  geom_point() + # Adiciona os pontos
+  geom_smooth(method = "lm") # Adiciona a curva, estimada por um modelo linear
+```
+
+Como se depreende do código acima, só precisamos especificar um método na função `geom_smooth` que, no caso, é `"lm"`, de *linear model*. Mais importante, nesse caso parece haver uma clara associação negativa entre a disponibilidade domiciliar de água e mortalidade infantil: quanto maior a disponibilidade, menor a mortalidade.
+
+
+## Estimativas
+
+Para examinarmos formalmente a relação entre `t_agua` e `mort1`, vamos recorrer novamente à função `lm`. Como temos um `data.frame` agora, e não mais dois vetores em objetos diferentes, usaremos um argumento da função `lm` para passar as variáveis do banco para ela. O argumento chama-se `data = `, e precisamos apenas passar a ele o nome do `data.frame` que contém nossas variáveis.
+
+```{r, eval=FALSE}
+meu_modelo <- lm(mort1 ~ t_agua, data = atlas)
+```
+
+Note que podemos estimar o mesmo modelo sem usar o argumento `data`, mas precisaremos usar em seu lugar indexadores (o que é mais trabalhoso e não recomendado):
+
+```{r, eval=FALSE}
+lm(atlas$mort1 ~ atlas$t_agua)
+```
+
+Para exibir de forma condensada os resultados do nosso modelo salvo em `meu_modelo`, basta digitar o nome do objeto no console:
+
+```{r, eval=FALSE}
+meu_modelo
+```
+
+Os dois modos produzem o mesmo resultado, ainda que o segundo seja o mais adequado. Mas, afinal, o que significa esse output da função `lm`. Podemos resumi-lo em duas partes:
+
+- 1. Abaixo de `Call:`, a função `lm` apenas exibe a chamada que usamos para rodar nosso modelo, incluindo aqui a fórmula usada;
+- 2. O mais importante, contudo, segue abaixo de `Coefficients:`, indicando a estimativa dos parâmetros, ou coeficientes, do efeito da variável independente, `t_agua`, sobre a variável dependente, `mort1`, além de um intercepto (ou constante), que indica o valor de esperado de mortalidade infantil num município hipotético onde a disponibilidade de água nos domicílios é zero.
+
+Com isso, podemos concluir rapidamente que a associação entre `t_agua` e `mort1` é negativa, uma vez que um aumento de 1% da variável `t_agua` prediz um decréscimo em `mort1`. Além disso, quando o valor de `t_agua` é igual a zero, nosso modelo prediz que o valor de `mort1` será igual ao da estimativa do intercepto. Obviamente, isso condiz o gráfico que fizemos anteriormente.
+
+
+## Inferência
+
+No mais das vezes, apenas avaliar um modelo pelos seus coeficientes não é suficiente. Usando nosso modelo estimado, podemos facilmente dar um passo adiante e fazer inferências a partir deles, considerando a incerteza na estimação dos nossos parâmetros. 
+
+Para tanto, o `R` dispõe de uma função, que é carregada por padrão a partir do pacote `stats`, chamada `confint`. Com ela, é possível calcular um intervalo de confiança de 95% (ou qualquer outro valor) para os coeficientes de nosso modelo. 
+
+```{r, eval=FALSE}
+confint(meu_modelo, level = 0.95)
+```
+
+A função retorna os intervalos mínimo e máximo de cada estimativa, o que pode ser usado para fazer afirmações do tipo de que, com 95% de probabilidade, nossa estimativa do efeito de `t_gua` sobre `mort1` está situada no intervalo indicado por `2.5 %` e `97.5 %`.
+
+Para alterar a cobertura do intervalo de confiança, basta modificar o valor passado ao argumento `level` da função (0.95 equivale a um intervalo de 95%):
+
+```{r, eval=FALSE}
+confint(meu_modelo, level = 0.90)
+```
+
+
+## Obtendo resultados detalhados
+
+Ainda que exibir os resultados da forma como fizemos seja útil para uma inspeção rápida, existem outras informações úteis que precisamos acessar para avaliarmos um modelo. Para obtê-las, usamos a função `summary`, que já vimos anteriormente.
+
+```{r, eval=FALSE}
+summary(meu_modelo)
+```
+
+Afora a linha iniciada por `Call:`, que já vimos, essa função retorna uma série de novas informações. Vamos focar especialmente em duas:
+
+- 1. `Coefficients:` reporta informações sobre as estimativas e inferências de nosso modelo, incluindo aqui a estimativa do efeito de nossas variáveis independentes e intercepto (abaixo de `Estimate`); o erro-padrão (`Std. Error`) de cada estimativa, que indica a incerteza envolvida nelas (e é usada no cálculo de intervalos de confiança); T-valor, `t value`, uma métrica normalmente usada para calcular P-valores em modelos de regressão (i.e., que é igual à estimativa divido pelo erro-padrão); e, finalmente, P-valor, `Pr(>|t|)`, a famosa estatística usada para testar se o efeito indicado por cada estimativa é (P-valor > 0.05) ou não (P-valor < 0.05) fruto de variação aleatória.^[A título de curiosidade, o P-valor é calculado com base na estatística T de cada variável e outra informação que cobriremos a seguir, os graus de liberdade do modelo.];
+- 2. `Multiple R-squared:` e `Adjusted R-squared:` são métricas simples que indicam a quantia de variação explicada pelo nosso modelo, onde 1 indica que toda a variação é explicada (e, logo, nossas variáveis predizem perfeitamente os valores de Y);
+
+
+## Acessando informações de um objeto lm
+
+Assim como outras informações no `R`, nosso modelo salvo no objeto `meu_modelo` contém diversas informações dentro dele. Por exemplo, podemos extrair um vetor com nossas estimativas usando:
+
+```{r, eval=FALSE}
+meu_modelo$coefficients
+```
+
+Essa e outras informações salvas dentro do objeto podem ser vistas com `names`:
+
+```{r, eval=FALSE}
+names(meu_modelo)
+```
+
+Também é possível salvar o *output* da função `summary` para fazer a mesma coisa. 
+
+```{r, eval=FALSE}
+resumo <- summary(meu_modelo)
+```
+
+Feito isso, temos à disposição todas as estatísticas reportadas pela função `summary` dentro de um mesmo objeto, o que pode ser usado, por exemplo, para extrair rapidamente apenas o R-quadrado de nosso modelo, como abaixo.
+
+```{r, eval=FALSE}
+resumo$r.squared
+```
+
+Isso será bastante útil em algumas situações que veremos adiante. Por enquanto, tente explorar as informações contidas dentro dos objetos `resumo` e `meu_modelo` e tente identificar o que indicam.
+
+## Exercícios II {-}
+
+- 1) A base `atlas`, que carregamos anteriormente, contém outras duas variáveis que podem ter relação com a taxa de mortalidade infantial até um 1 ano por 1000 crianças nascidas. São elas: `t_lixo`, que indica a % de domicílios no município com coleta de lixo; e `t_luz`, que indica a % de domicílios com energia elétrica. Qual sua expectativa do efeito dessas variáveis sobre `mort1`?
+- 2) Faça dois gráficos de *scatterplot*, um para investigar a relação entre `mort1` e `t_luz` e, o outro, para investigar a relação entre `mort1` e `t_lixo`;
+- 3) Estime e salve dois modelos lineares simples para examinar a relação entre `mort1` e `t_luz` e entre `mort1` e `t_lixo`. Lembre-se: `mort1` é nossa variável dependente;
+- 4) Usando `summary`, interprete os resultados desses dois modelos. Os resultados condizem com a sua expectativa prévia?
+- 5) Com os mesmos modelos estimados anteriormente, faça inferência a partir do efeito de `t_luz` e `t_lixo` sobre `mort1`. Quais são os intervalos máximos e mínimos, considerando 95% de probabilidade, dos efeitos dessas duas variáveis?
+
+# Modelos Lineares Multivariados {#aula2}
+
+Embora examinar a relação entre duas variáveis, como vimos na Aula \@ref(aula1), seja útil em algumas ocasiões, modelos lineares também servem para examinar o efeito de múltiplas variáveis independentes simultaneamente. Nessa aula, vamos ver como estimar modelos como estes. Após isso, veremos como rodar e interpretar de forma simples modelos lineares multivariados e, também, modelos com transformações de variáveis independentes -- o que é útil em alguns casos, como quando examinamos relações quadráticas ou quando desejamos interpretar coeficientes de forma percentual.
+
+## Modelo linear com dois preditores
+
+No exemplo da Aula \@ref(aula1), examinamos o efeito da variávei X sobre Y em todos os municípios brasileiros. Como vimos, essa relação é positiva e, além disso, é possível inferir isso a partir dos dados, dado os intervalos de confiança da estimativa do efeito predito de X sobre Y.
+
+Na mesma base de dados, também temos outra variável que possivelmente tem efeito sobre Y. Essa variável chama-se `X`, e indica quanto... 
+
+Vamos carregar nosso banco de dados usando o pacote `readr`.
+
+
+```{r, eval=FALSE}
+library(readr)
+x <- read_delim("afe.txt", delim = ";")
+
+```
+
+Para termos uma ideia sobre a distribuição da variável X, podemos usar o indexador `$` para acessá-la conjuntamente com a função `summary` para gerar algumas estatísticas descritivas.
+
+
+```{r, eval=FALSE}
+summary(x$variavel)
+```
+
+Sempre é uma boa ideia examinar graficamente a relação entre variáveis e, nesse caso, podemos fazer isso usando o pacote `ggplot2` para plotar a relação entre X e Y.
+
+```{r, eval=FALSE}
+library(ggplot2)
+
+ggplot(banco, aes(x = x, y = y)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") 
+```
+
+O problema: essa relação não leva em conta o efeito de X. Talvez municípios que tenham valores... em X tenham ... em X2. Modelos lineares nos permitem contornar esse tipo de problema. Para isso, precisamos apenas estimar um modelo que inclua as duas variáveis, X e X2, como preditores simultaneamente. O truque para fazer isso é fácil: basta apenas usar um `+` para adicionar mais variáveis.
+
+```{r, eval=FALSE}
+meu_modelo2 <- lm(y ~ x + x2, data = banco)
+```
+
+
+## Modelos com múltiplos preditores
+
+Usando a mesma sintaxe que vimos acima, podemos facilmente incluir mais variáveis a um modelo linear. Vamos incluir uma variável adicional ao nosso modelo, chamada X, que indica... 
+
+```{r, eval=FALSE}
+meu_modelo2 <- lm(y ~ x + x2, data = banco)
+```
+
+Aqui também, interpretar os resultados é algo simples. 
+
+
+
+## Obtendo resultados simplificados
+
+Algo que dificulta interpretar modelos multivariados de forma rápida é a quantidade de informações reportada pela função `summary`. Felizmente, existe uma alternativa a ela em um pacote chamado `arm`: a função `display`. Em vez de reportar uma série de estatísticas e informações nem sempre úteis, essa função simplifica os resultados de uma regressão, reportando apenas estimativas, erros-padrão e informações como número de observações e parâmetros estimados. Como veremos adiante, `arm` também oferece algumas funções que simplificam enormemente nossa tarefa de estimar e analisar modelos de regressão. 
+
+Como esse pacote não vem por padrão no `R`, precisamos intalá-lo usando `install.packages`.
+
+```{r, eval=FALSE}
+install.packages(arm)
+```
+
+Feito isso, podemos carregar o pacote e usá-lo para reportar os resultados do nosso modelo linear multivariado salvo no objeto `modelo_multi`.
+
+```{r, eval=FALSE}
+library(arm)
+
+display(modelo_multi)
+```
+
+
+## Interpretando resultados com gráficos
+
+`arm` ainda oferece um jeito mais fácil de visualizar resultados de modelos multivariados. Usando a função `coefplot`, ele plota as estimativas de um modelo, já incluindo intervalos de confiança de 95% e 90%. Para usá-la, basta passar o objeto com o modelo salvo para a função.
+
+```{r, eval=FALSE}
+coefplot(modelo_multi)
+```
+
+Além de simples, o resultado gráfico 
+
+## Centrando preditores
+
+
+## Tranformando preditores
+
+
+## Relações quadráticas e outras
+
+
+## Exercícios {-}
+
+
+
+
+
+
