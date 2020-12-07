@@ -1,10 +1,8 @@
 ---
-title: "Testes de hipótese"
+title: "Análise de variância e correlação"
 author: "Frederico Bertholini"
-date: "30.nov.2020"
+date: "07.dez.2020"
 output: 
-  
-  tufte_handout:
   beamer_presentation:
     theme: Berkeley
     colortheme: dove
@@ -25,55 +23,22 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Modelo Linear Simples {#aula1}
-
-Nesta primeira aula, veremos um dos modelos mais básicos, mas também um dos mais utilizados, de regressão: o modelo linear simples estimado por mínimos quadrados ordinários (MQO).^[Para um explicação rápida de como esse método de estimação funciona, [ver aqui](https://fmeireles.shinyapps.io/modelagem_r/).] Entre outros, aprenderamos a visualizar relações lineares bivariadas; a usar a função básica para estimar modelos lineares, `lm`; e a obter resultados detalhados de um modelo. Também usaremos alguns dados, que estão na pasta de materiais desta aula.
 
 
-## Visualizando relações entre duas variáveis
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T,eval=T,warning = F,message = F,comment = '',fig.height = 3.5)
+lapply(c("tidyverse","janitor","readxl","patchwork","infer","moderndive","kableExtra","scales",
+         "nycflights13","ggplot2movies","patchwork","viridis","ggrepel","gt","effectsize",
+          "extrafont","hrbrthemes","stringr","knitr", "magrittr"),require,character.only=T)
 
-Podemos usar gráficos para visualizar relações entre variáveis. Podemos, por exemplo, criar duas variáveis contínuas, geradas aleatoriamente com a função `rnorm`, e plotar sua relação com um gráfico de pontos.
+loadfonts()
 
-```{r, eval=FALSE}
-set.seed(123) # Para replicar o conteudo da aula
+theme_ipsum_mod <- theme_ipsum() +
+  theme(panel.spacing=grid::unit(.5, "lines"),
+        plot.margin = ggplot2::margin(1, 1, 1, 1))
 
-x <- rnorm(100)
-y <- rnorm(100)
-
-plot(y ~ x)
-
+dfe <- read_rds("dados/dfe.rds")
 ```
-
-É possível ver que as variáveis que criamos, `y` e `x`, não parecem ter relação. Na verdade, os pontos no gráficos estão dispersos, o que dificulta detectar algum padrão.
-
-Para investigarmos isso detidamente, usamos um modelo linear estimado por mínimos quadrados ordinários (MQO). A função que estima esse tipo de modelo chama-se `lm`, e ela está contida no `R-base`. Portanto, não precisamos carregar nenhum pacote para usá-la, basta executar o seguinte código:
-
-```{r, eval=FALSE}
-lm(y ~ x)
-```
-
-A utilização da função `lm` é simples. Em primeiro lugar, precisamos passar como argumento da função uma fórmula contendo a especificação do nosso modelo. No exemplo, `y` é nossa variável dependente e, assim, aparece do lado direito do operador `~`. `x`, dessa forma, é nossa variável independente, ou explicativa, ou, ainda, preditora. 
-
-Podemos salvar os resultados de um modelo em um objeto para facilitar a sua manipulação.
-
-```{r, eval=FALSE}
-meu_modelo <- lm(y ~ x)
-```
-
-Uma das vantagens disso é que, agora, podemos usá-lo para traçar um reta com valores preditos de `y` em relação a `x`, que resume a relação entre ambas, no gráfico que criamos anteriormente. Para tanto, usamos apenas a função `abline`.
-
-```{r, eval=FALSE}
-plot(y ~ x)
-abline(meu_modelo)
-```
-
-Realmente, não parece haver relação substantiva entre `y` e `x`, como indica a melhor reta estimada via MQO.
-
-## Exercícios I {-}
-
-- 1) Crie duas variáveis aleatórias, `var1` e `var2`, usando a função `rnorm`. Cada variável precisa ter 1000 observações (linhas);
-- 2) Com essas variáveis, rode e salve um modelo de regressão linear simples no objeto `modelo_simples`, usando `var1` como variável dependente e `var2` como independente;
-- 3) Construa um gráfico *scatterplot* que mostre a relação entre essas variáveis e que inclua uma reta que sintetize a relação entre elas (a partir das informações salvas em `modelo_simples`).
 
 
 ## Visualizando relações entre variáveis em um banco
@@ -95,8 +60,6 @@ head(atlas)
 Em particular, vamos trabalhar com duas dessas variáveis: a `t_agua`, que indica a percentagem de domicílios com água encanada, e a `mort1`, que indica o número de crianças que não sobreviveram ao primeiro ano de idade em cada 1000 crianças nascidas no município. Nosso objetivo será investigar se existe relação entre disponibilidade de água encanada (nossa variável independente) e mortalidade infantil (nossa variável dependente) usando um modelo linear por MQO. Como essas variáveis estão dentro de um banco de dados, existe um modo mais fácil de visualizar a relação entre elas usando o pacote `ggplot2`. Especificamente, esse pacote contém um `geom` chamado `geom_smooth` que serve para plotar uma curva trançando a relação entre duas (ou mais, como veremos adiante) variáveis. Criamos esse gráfico com o seguinte código:
 
 ```{r, eval=FALSE}
-library(ggplot2)
-
 ggplot(atlas, aes(x = t_lixo, y = mort1)) + 
   geom_point() + # Adiciona os pontos
   geom_smooth(method = "lm") # Adiciona a curva, estimada por um modelo linear
@@ -296,7 +259,6 @@ Além de simples, o resultado gráfico
 
 
 ## Exercícios {-}
-
 
 
 
